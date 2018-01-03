@@ -1,0 +1,611 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		033D858F1FDFA1F400113EDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D858E1FDFA1F400113EDE /* AppDelegate.m */; };
+		033D85921FDFA1F400113EDE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D85911FDFA1F400113EDE /* ViewController.m */; };
+		033D85951FDFA1F400113EDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033D85931FDFA1F400113EDE /* Main.storyboard */; };
+		033D85971FDFA1F400113EDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033D85961FDFA1F400113EDE /* Assets.xcassets */; };
+		033D859A1FDFA1F400113EDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */; };
+		033D859D1FDFA1F400113EDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D859C1FDFA1F400113EDE /* main.m */; };
+		033D85A71FDFA1F400113EDE /* DinoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D85A61FDFA1F400113EDE /* DinoTests.m */; };
+		03DD672F1FE7C61000F8DACD /* IWLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD672E1FE7C61000F8DACD /* IWLoginModel.m */; };
+		03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */; };
+		03DD67351FE8F67200F8DACD /* IWDinoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD67341FE8F67200F8DACD /* IWDinoService.m */; };
+		8C8C5CEBABF829D6F79346AF /* Pods_Dino.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A104369C9E18C2BCFAAB82 /* Pods_Dino.framework */; };
+		EA5EC293F26576A93E208A32 /* Pods_DinoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A892990C78FDC81DBC5C2C7B /* Pods_DinoTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		033D85A31FDFA1F400113EDE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 033D85821FDFA1F400113EDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 033D85891FDFA1F400113EDE;
+			remoteInfo = Dino;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		033D858A1FDFA1F400113EDE /* Dino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dino.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		033D858D1FDFA1F400113EDE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		033D858E1FDFA1F400113EDE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		033D85901FDFA1F400113EDE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		033D85911FDFA1F400113EDE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		033D85941FDFA1F400113EDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		033D85961FDFA1F400113EDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		033D85991FDFA1F400113EDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		033D859B1FDFA1F400113EDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		033D859C1FDFA1F400113EDE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		033D85A21FDFA1F400113EDE /* DinoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DinoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		033D85A61FDFA1F400113EDE /* DinoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DinoTests.m; sourceTree = "<group>"; };
+		033D85A81FDFA1F400113EDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03DD672D1FE7C61000F8DACD /* IWLoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWLoginModel.h; sourceTree = "<group>"; };
+		03DD672E1FE7C61000F8DACD /* IWLoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWLoginModel.m; sourceTree = "<group>"; };
+		03DD67301FE7C6A800F8DACD /* NSObject+IWJSONTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+IWJSONTool.h"; sourceTree = "<group>"; };
+		03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IWJSONTool.m"; sourceTree = "<group>"; };
+		03DD67331FE8F67200F8DACD /* IWDinoService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWDinoService.h; sourceTree = "<group>"; };
+		03DD67341FE8F67200F8DACD /* IWDinoService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWDinoService.m; sourceTree = "<group>"; };
+		11A104369C9E18C2BCFAAB82 /* Pods_Dino.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dino.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		145AC21F1EEDB44FA1E082F3 /* Pods-Dino.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dino.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dino/Pods-Dino.debug.xcconfig"; sourceTree = "<group>"; };
+		682913CFFE8C4113B70BBA2E /* Pods-DinoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DinoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DinoTests/Pods-DinoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8FE46564E286AA0A37B9EEC0 /* Pods-Dino.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dino.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dino/Pods-Dino.release.xcconfig"; sourceTree = "<group>"; };
+		A54C7D8915C53F8EDEF43901 /* Pods-DinoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DinoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DinoTests/Pods-DinoTests.release.xcconfig"; sourceTree = "<group>"; };
+		A892990C78FDC81DBC5C2C7B /* Pods_DinoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DinoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		033D85871FDFA1F400113EDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C8C5CEBABF829D6F79346AF /* Pods_Dino.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		033D859F1FDFA1F400113EDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA5EC293F26576A93E208A32 /* Pods_DinoTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		033D85811FDFA1F400113EDE = {
+			isa = PBXGroup;
+			children = (
+				033D858C1FDFA1F400113EDE /* Dino */,
+				033D85A51FDFA1F400113EDE /* DinoTests */,
+				033D858B1FDFA1F400113EDE /* Products */,
+				6689A1CBE455F39237A31DAE /* Pods */,
+				49E5502D7356DF5E1614DB94 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		033D858B1FDFA1F400113EDE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				033D858A1FDFA1F400113EDE /* Dino.app */,
+				033D85A21FDFA1F400113EDE /* DinoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		033D858C1FDFA1F400113EDE /* Dino */ = {
+			isa = PBXGroup;
+			children = (
+				033D858D1FDFA1F400113EDE /* AppDelegate.h */,
+				033D858E1FDFA1F400113EDE /* AppDelegate.m */,
+				033D85901FDFA1F400113EDE /* ViewController.h */,
+				033D85911FDFA1F400113EDE /* ViewController.m */,
+				033D85931FDFA1F400113EDE /* Main.storyboard */,
+				033D85961FDFA1F400113EDE /* Assets.xcassets */,
+				033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */,
+				033D859B1FDFA1F400113EDE /* Info.plist */,
+				033D859C1FDFA1F400113EDE /* main.m */,
+				03DD672D1FE7C61000F8DACD /* IWLoginModel.h */,
+				03DD672E1FE7C61000F8DACD /* IWLoginModel.m */,
+				03DD67301FE7C6A800F8DACD /* NSObject+IWJSONTool.h */,
+				03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */,
+				03DD67331FE8F67200F8DACD /* IWDinoService.h */,
+				03DD67341FE8F67200F8DACD /* IWDinoService.m */,
+			);
+			path = Dino;
+			sourceTree = "<group>";
+		};
+		033D85A51FDFA1F400113EDE /* DinoTests */ = {
+			isa = PBXGroup;
+			children = (
+				033D85A61FDFA1F400113EDE /* DinoTests.m */,
+				033D85A81FDFA1F400113EDE /* Info.plist */,
+			);
+			path = DinoTests;
+			sourceTree = "<group>";
+		};
+		49E5502D7356DF5E1614DB94 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11A104369C9E18C2BCFAAB82 /* Pods_Dino.framework */,
+				A892990C78FDC81DBC5C2C7B /* Pods_DinoTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6689A1CBE455F39237A31DAE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				145AC21F1EEDB44FA1E082F3 /* Pods-Dino.debug.xcconfig */,
+				8FE46564E286AA0A37B9EEC0 /* Pods-Dino.release.xcconfig */,
+				682913CFFE8C4113B70BBA2E /* Pods-DinoTests.debug.xcconfig */,
+				A54C7D8915C53F8EDEF43901 /* Pods-DinoTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		033D85891FDFA1F400113EDE /* Dino */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 033D85AB1FDFA1F400113EDE /* Build configuration list for PBXNativeTarget "Dino" */;
+			buildPhases = (
+				CFD14F9E97FBE1107EE2CAAF /* [CP] Check Pods Manifest.lock */,
+				033D85861FDFA1F400113EDE /* Sources */,
+				033D85871FDFA1F400113EDE /* Frameworks */,
+				033D85881FDFA1F400113EDE /* Resources */,
+				5A641A2574D8DB39ED16B9C4 /* [CP] Embed Pods Frameworks */,
+				7691F605D8777102BDB644E1 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dino;
+			productName = Dino;
+			productReference = 033D858A1FDFA1F400113EDE /* Dino.app */;
+			productType = "com.apple.product-type.application";
+		};
+		033D85A11FDFA1F400113EDE /* DinoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 033D85AE1FDFA1F400113EDE /* Build configuration list for PBXNativeTarget "DinoTests" */;
+			buildPhases = (
+				3A0BD17AA7EB86BF0668F08A /* [CP] Check Pods Manifest.lock */,
+				033D859E1FDFA1F400113EDE /* Sources */,
+				033D859F1FDFA1F400113EDE /* Frameworks */,
+				033D85A01FDFA1F400113EDE /* Resources */,
+				5BB7C420B702880EE8813414 /* [CP] Embed Pods Frameworks */,
+				2E7B71EF003259CEB24D820C /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				033D85A41FDFA1F400113EDE /* PBXTargetDependency */,
+			);
+			name = DinoTests;
+			productName = DinoTests;
+			productReference = 033D85A21FDFA1F400113EDE /* DinoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		033D85821FDFA1F400113EDE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Ideawise Ltd";
+				TargetAttributes = {
+					033D85891FDFA1F400113EDE = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					033D85A11FDFA1F400113EDE = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 033D85891FDFA1F400113EDE;
+					};
+				};
+			};
+			buildConfigurationList = 033D85851FDFA1F400113EDE /* Build configuration list for PBXProject "Dino" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 033D85811FDFA1F400113EDE;
+			productRefGroup = 033D858B1FDFA1F400113EDE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				033D85891FDFA1F400113EDE /* Dino */,
+				033D85A11FDFA1F400113EDE /* DinoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		033D85881FDFA1F400113EDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				033D859A1FDFA1F400113EDE /* LaunchScreen.storyboard in Resources */,
+				033D85971FDFA1F400113EDE /* Assets.xcassets in Resources */,
+				033D85951FDFA1F400113EDE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		033D85A01FDFA1F400113EDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2E7B71EF003259CEB24D820C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DinoTests/Pods-DinoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A0BD17AA7EB86BF0668F08A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DinoTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5A641A2574D8DB39ED16B9C4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Dino/Pods-Dino-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dino/Pods-Dino-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5BB7C420B702880EE8813414 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DinoTests/Pods-DinoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7691F605D8777102BDB644E1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dino/Pods-Dino-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CFD14F9E97FBE1107EE2CAAF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Dino-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		033D85861FDFA1F400113EDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				033D85921FDFA1F400113EDE /* ViewController.m in Sources */,
+				033D859D1FDFA1F400113EDE /* main.m in Sources */,
+				033D858F1FDFA1F400113EDE /* AppDelegate.m in Sources */,
+				03DD672F1FE7C61000F8DACD /* IWLoginModel.m in Sources */,
+				03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */,
+				03DD67351FE8F67200F8DACD /* IWDinoService.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		033D859E1FDFA1F400113EDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				033D85A71FDFA1F400113EDE /* DinoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		033D85A41FDFA1F400113EDE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 033D85891FDFA1F400113EDE /* Dino */;
+			targetProxy = 033D85A31FDFA1F400113EDE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		033D85931FDFA1F400113EDE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				033D85941FDFA1F400113EDE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				033D85991FDFA1F400113EDE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		033D85A91FDFA1F400113EDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		033D85AA1FDFA1F400113EDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		033D85AC1FDFA1F400113EDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 145AC21F1EEDB44FA1E082F3 /* Pods-Dino.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9SUHG892S5;
+				INFOPLIST_FILE = Dino/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thenetcircle.-.Dino";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		033D85AD1FDFA1F400113EDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FE46564E286AA0A37B9EEC0 /* Pods-Dino.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9SUHG892S5;
+				INFOPLIST_FILE = Dino/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thenetcircle.-.Dino";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		033D85AF1FDFA1F400113EDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 682913CFFE8C4113B70BBA2E /* Pods-DinoTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9SUHG892S5;
+				INFOPLIST_FILE = DinoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thenetcircle.-.DinoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dino.app/Dino";
+			};
+			name = Debug;
+		};
+		033D85B01FDFA1F400113EDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A54C7D8915C53F8EDEF43901 /* Pods-DinoTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9SUHG892S5;
+				INFOPLIST_FILE = DinoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.thenetcircle.-.DinoTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Dino.app/Dino";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		033D85851FDFA1F400113EDE /* Build configuration list for PBXProject "Dino" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				033D85A91FDFA1F400113EDE /* Debug */,
+				033D85AA1FDFA1F400113EDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		033D85AB1FDFA1F400113EDE /* Build configuration list for PBXNativeTarget "Dino" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				033D85AC1FDFA1F400113EDE /* Debug */,
+				033D85AD1FDFA1F400113EDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		033D85AE1FDFA1F400113EDE /* Build configuration list for PBXNativeTarget "DinoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				033D85AF1FDFA1F400113EDE /* Debug */,
+				033D85B01FDFA1F400113EDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 033D85821FDFA1F400113EDE /* Project object */;
+}
