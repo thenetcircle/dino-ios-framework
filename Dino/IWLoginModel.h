@@ -8,10 +8,28 @@
 
 #import <Foundation/Foundation.h>
 
+@interface IWAttachment : NSObject
+@property (nonatomic, strong) NSString *objectType;
+@property (nonatomic, strong) NSString *content;
+
+- (NSDictionary *)dictionary;
+@end
+
+
+@interface IWActorModel : NSObject
+
+@property (nonatomic, strong) NSString *uid;
+@property (nonatomic, strong) NSString *displayName;
+@property (nonatomic, strong) NSMutableArray<IWAttachment *> *attachments;
+
+- (NSDictionary *)dictionary;
+@end
+
 @interface IWLoginModel : NSObject
 
-@property (nonatomic, strong) NSString *userID;
-@property (nonatomic, strong) NSString *displayName;
-@property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) NSString *verb;
+@property (nonatomic, strong) IWActorModel *actor;
 
+- (instancetype)initWithToken:(NSString *)token userId:(NSString *)userId displayName:(NSString *)displayName;
+- (NSDictionary *)dictionary;
 @end

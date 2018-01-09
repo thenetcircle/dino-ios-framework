@@ -22,65 +22,127 @@
 
 @implementation IWDinoService
 
-- (void)connectWithLoginModel:(IWLoginModel *)loginModel {
-    
-    [self connect];
-}
-
 
 - (void)connect {
+    if (self.socketClient.status == SocketIOStatusConnected) {
+        [self.socketClient disconnect];
+    }
+    
+    if (self.socketClient.status == SocketIOStatusConnecting) {
+        return;
+    }
+    
     [self addListeners];
     
     [self.socketClient connect];
 }
 
 
-
 - (void)addListeners {
     
     [self.socketClient on:@"connect_error" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@"socket error");
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  socket error  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
     
     [self.socketClient on:@"disconnect" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@"socket disconnect");
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  socket disconnect  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
     
     [self.socketClient on:@"connect_timeout" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@"socket connect timeout");
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  socket connect timeout  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
     
     [self.socketClient on:@"connect" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@"socket connected");
-        [self.socketClient emit:@"login" with:@[@{@"userId":@3, @"displayName":@"dean", @"token":@"6ef3f8997d085ca0ef1219d852e26b9647741861"}]];
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  socket connected  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        
     }];
     
-    [self.socketClient on:@"gn_connect" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@"socket gn_connect");
-        [self.socketClient emit:@"login" with:@[@{@"userId":@3, @"displayName":@"dean", @"token":@"6ef3f8997d085ca0ef1219d852e26b9647741861"}]];
+    [self.socketClient onAny:^(SocketAnyEvent * event) {
+        NSLog(@"any");
     }];
-    
+}
+
+
+- (void)loginWithLoginModel:(IWLoginModel *)loginModel {
     [self.socketClient on:@"gn_login" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@"gn_login");
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_login  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
-
+    [self.socketClient emit:@"login" with:@[loginModel.dictionary]];
 }
 
-- (void)login {
+- (void)listChannels {
     
+    [self.socketClient on:@"gn_list_channels" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_list_channels  <<<<<<<<<<<<<<<<<<<<<<<<<");
+    }];
     
+    [self.socketClient emit:@"list_channels" with:@[@{@"verb":@"list"}]];
     
 }
 
+- (void)listRoomsWithChannelId:(NSString *)channelId {
+    
+    [self.socketClient on:@"gn_list_rooms" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_list_rooms  <<<<<<<<<<<<<<<<<<<<<<<<<");
+    }];
+    
+    [self.socketClient emit:@"list_rooms" with:@[@{@"verb":@"list", @"object":@{@"url":channelId}}]];
+}
+
+- (void)sendMessageWithRoomId:(NSString *)roomId objectType:(NSString *)objectType message:(NSString *)message {
+
+    NSString *base64Message = [[message dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
+    [self.socketClient on:@"gn_message" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message  <<<<<<<<<<<<<<<<<<<<<<<<<");
+    }];
+    
+    [self.socketClient emit:@"messages" with:@[@{@"verb":@"send", @"target":@{@"id":roomId, @"objectType":objectType}, @"object":@{@"content":base64Message}}]];
+}
+
+
+- (void)createPrivateRoomWithUserId:(NSString *)userId1 userId2:(NSString *)userId2 {
+    
+    [self.socketClient on:@"gn_create" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
+    }];
+    
+    
+    NSMutableString *summary = [NSMutableString stringWithFormat:@"%@,%@", userId1, userId2];
+    NSDictionary *createModel = @{ @"verb":@"create",
+                                   @"object":@{@"url":@"6cba7e00-6b0e-4bee-ad59-98bf90813fd0"},
+                                   @"target": @{@"displayName"  : [[@"123123" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
+                                                @"objectType"   : @"private",
+                                                @"attatchments" : @[@{@"objectType" : @"owners",
+                                                                      @"summary"    : summary
+                                                                      }]
+                                                }
+                                   };
+    [self.socketClient emit:@"create" with:@[createModel]];
+}
+
+- (void)joinRoom:(NSString *)roomId {
+    [self.socketClient on:@"gn_join" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
+    }];
+    
+    [self.socketClient emit:@"join" with:@[@{@"verb":@"list", @"target":@{@"id":roomId}}]];
+}
+
+- (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime {
+    [self.socketClient on:@"gn_history" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
+    }];
+    updateTime = updateTime?:[NSString stringWithFormat:@"%d",(int)[[NSDate date] timeIntervalSince1970]];
+    [self.socketClient emit:@"history" with:@[@{@"verb":@"list", @"updated":updateTime ,@"target":@{@"id":roomId, @"objectType":@"private"}}]];
+}
 
 #pragma mark - getter / setter
 
 - (SocketManager *)socketManager {
     if (!_socketManager) {
-        NSURL* url = [[NSURL alloc] initWithString:IW_DINO_SERVICE_ADDRESS];
+        NSURL* url = [[NSURL alloc] initWithString:@"http://10.60.1.124:9210/ws"];
         _socketManager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log":@YES,
-                                                                               @"forceNew":@YES,
-                                                                               @"forcePolling":@YES,
+                                                                               @"forcePolling":@NO,
                                                                                @"transports":@[@"websocket"]}];
     }
     return _socketManager;
@@ -88,7 +150,7 @@
 
 - (SocketIOClient *)socketClient {
     if (!_socketClient) {
-        _socketClient = self.socketManager.defaultSocket;
+        _socketClient = [self.socketManager socketForNamespace:@"/ws"];
     }
     return _socketClient;
 }
