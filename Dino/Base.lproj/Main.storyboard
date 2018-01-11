@@ -186,19 +186,25 @@
                                 <rect key="frame" x="32" y="501" width="310" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79P-Y7-hH1">
-                                        <rect key="frame" x="10" y="5" width="85" height="30"/>
+                                        <rect key="frame" x="106" y="5" width="85" height="30"/>
                                         <state key="normal" title="CreateRoom"/>
                                         <connections>
                                             <action selector="createRoom:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZM5-1E-1jy"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NtI-U9-uRD">
-                                        <rect key="frame" x="105" y="5" width="89" height="30"/>
+                                        <rect key="frame" x="201" y="5" width="89" height="30"/>
                                         <state key="normal" title="ListChannels"/>
                                         <connections>
                                             <action selector="listChannels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oj5-ag-Udm"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="RoomName" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MZD-bl-X9y">
+                                        <rect key="frame" x="5" y="5" width="96" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -206,9 +212,11 @@
                                     <constraint firstItem="79P-Y7-hH1" firstAttribute="centerY" secondItem="FQC-2C-iFV" secondAttribute="centerY" id="4Zc-WJ-aqN"/>
                                     <constraint firstAttribute="height" constant="40" id="Ekk-mG-zpF"/>
                                     <constraint firstItem="NtI-U9-uRD" firstAttribute="centerY" secondItem="FQC-2C-iFV" secondAttribute="centerY" id="EuS-2f-Jqs"/>
-                                    <constraint firstItem="79P-Y7-hH1" firstAttribute="leading" secondItem="FQC-2C-iFV" secondAttribute="leading" constant="10" id="ZaT-pP-fgd"/>
+                                    <constraint firstItem="MZD-bl-X9y" firstAttribute="leading" secondItem="FQC-2C-iFV" secondAttribute="leading" constant="5" id="Gge-Gg-IPL"/>
+                                    <constraint firstItem="79P-Y7-hH1" firstAttribute="leading" secondItem="MZD-bl-X9y" secondAttribute="trailing" constant="5" id="kOy-yS-6Gd"/>
                                     <constraint firstAttribute="width" constant="310" id="sUN-tf-MXd"/>
                                     <constraint firstItem="NtI-U9-uRD" firstAttribute="leading" secondItem="79P-Y7-hH1" secondAttribute="trailing" constant="10" id="uPQ-eG-V85"/>
+                                    <constraint firstItem="MZD-bl-X9y" firstAttribute="centerY" secondItem="FQC-2C-iFV" secondAttribute="centerY" id="w7j-ay-Qbt"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MkN-qI-mCP">
@@ -267,7 +275,7 @@
                                             <action selector="listRooms:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uIC-2N-dLE"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wSD-lX-AMm">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="6cba7e00-6b0e-4bee-ad59-98bf90813fd0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wSD-lX-AMm">
                                         <rect key="frame" x="97" y="9" width="154" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -400,6 +408,7 @@
                         <outlet property="_roomIdField" destination="UGS-gK-c2d" id="8zi-Ea-qbF"/>
                         <outlet property="_roomIdForHistoryField" destination="PNF-j9-cI5" id="oyA-Go-FOg"/>
                         <outlet property="_roomIdForMessageField" destination="ZUo-Tw-nNw" id="yxv-Eq-0Y4"/>
+                        <outlet property="_roomNameForCreateRoomField" destination="MZD-bl-X9y" id="DWe-Ky-xIw"/>
                         <outlet property="_user1IdLabel" destination="nmj-vs-CEc" id="w9P-eo-UlC"/>
                         <outlet property="_user1TokenField" destination="59J-X8-Tjc" id="fbn-a1-B2r"/>
                         <outlet property="_user2IdLabel" destination="itM-Rb-jFd" id="kAN-6Y-Poh"/>

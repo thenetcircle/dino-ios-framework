@@ -15,9 +15,10 @@
 
 
 @interface IWDinoService ()
-@property (nonatomic, strong) SocketManager  *socketManager;
-@property (nonatomic, strong) SocketIOClient *socketClient;
-@property (nonatomic, strong) IWLoginModel *loginModel;
+@property (nonatomic, strong) SocketManager     *socketManager;
+@property (nonatomic, strong) SocketIOClient    *socketClient;
+@property (nonatomic, strong) IWLoginModel      *loginModel;
+@property (nonatomic, strong) NSDateFormatter   *rcfDateFormatter;
 @end
 
 @implementation IWDinoService
@@ -96,11 +97,11 @@
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
     
-    [self.socketClient emit:@"messages" with:@[@{@"verb":@"send", @"target":@{@"id":roomId, @"objectType":objectType}, @"object":@{@"content":base64Message}}]];
+    [self.socketClient emit:@"message" with:@[@{@"verb":@"send", @"target":@{@"id":roomId, @"objectType":objectType}, @"object":@{@"content":base64Message}}]];
 }
 
 
-- (void)createPrivateRoomWithUserId:(NSString *)userId1 userId2:(NSString *)userId2 {
+- (void)createPrivateRoomWithUserId:(NSString *)userId1 userId2:(NSString *)userId2 roomName:(NSString *)roomName{
     
     [self.socketClient on:@"gn_create" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -110,7 +111,7 @@
     NSMutableString *summary = [NSMutableString stringWithFormat:@"%@,%@", userId1, userId2];
     NSDictionary *createModel = @{ @"verb":@"create",
                                    @"object":@{@"url":@"6cba7e00-6b0e-4bee-ad59-98bf90813fd0"},
-                                   @"target": @{@"displayName"  : [[@"123123" dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
+                                   @"target": @{@"displayName"  : [[roomName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
                                                 @"objectType"   : @"private",
                                                 @"attatchments" : @[@{@"objectType" : @"owners",
                                                                       @"summary"    : summary
@@ -125,14 +126,14 @@
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
     
-    [self.socketClient emit:@"join" with:@[@{@"verb":@"list", @"target":@{@"id":roomId}}]];
+    [self.socketClient emit:@"join" with:@[@{@"verb":@"list", @"target":@{@"id":roomId}}]];
 }
 
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime {
     [self.socketClient on:@"gn_history" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
-    updateTime = updateTime?:[NSString stringWithFormat:@"%d",(int)[[NSDate date] timeIntervalSince1970]];
+    updateTime = updateTime ? : [self.rcfDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-3600]];
     [self.socketClient emit:@"history" with:@[@{@"verb":@"list", @"updated":updateTime ,@"target":@{@"id":roomId, @"objectType":@"private"}}]];
 }
 
@@ -153,6 +154,14 @@
         _socketClient = [self.socketManager socketForNamespace:@"/ws"];
     }
     return _socketClient;
+}
+
+- (NSDateFormatter *)rcfDateFormatter {
+    if (!_rcfDateFormatter) {
+        _rcfDateFormatter = [[NSDateFormatter alloc] init];
+        _rcfDateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+    }
+    return _rcfDateFormatter;
 }
 
 @end

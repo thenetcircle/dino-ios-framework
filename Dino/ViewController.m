@@ -23,6 +23,7 @@
     IBOutlet    UITextField     *_messageField;
     IBOutlet    UITextField     *_roomIdForMessageField;
     IBOutlet    UITextField     *_roomIdForHistoryField;
+    IBOutlet    UITextField     *_roomNameForCreateRoomField;
 }
 
 
@@ -67,7 +68,9 @@
 }
 
 - (IBAction)createRoom:(UIButton *)button {
-    [self.socketService createPrivateRoomWithUserId:_user1IdLabel.text userId2:_user2IdLabel.text];
+    [self.socketService createPrivateRoomWithUserId:_user1IdLabel.text
+                                            userId2:_user2IdLabel.text
+                                           roomName:_roomNameForCreateRoomField.text];
 }
 
 - (IBAction)joinRoom:(UIButton *)button {
@@ -75,11 +78,11 @@
 }
 
 - (IBAction)sendMessage:(UIButton *)button {
-    [self.socketService sendMessageWithRoomId:_roomIdForMessageField.text objectType:@"private" message:_messageField.text];
+    [self.socketService sendMessageWithRoomId:_roomIdForMessageField.text objectType:@"room" message:_messageField.text];
 }
 
 - (IBAction)getHistory:(UIButton *)button {
-    [self.socketService getHistoryWithRoomId:_roomIdForHistoryField.text updatedTime:@"2018-01-09T15:00:00Z"];
+    [self.socketService getHistoryWithRoomId:_roomIdForHistoryField.text updatedTime:nil];
 }
 
 - (IWDinoService *)socketService {

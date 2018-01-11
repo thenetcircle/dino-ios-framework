@@ -16,7 +16,7 @@
 - (void)loginWithLoginModel:(IWLoginModel *)loginModel;
 - (void)listChannels;
 - (void)listRoomsWithChannelId:(NSString *)channelId;
-- (void)createPrivateRoomWithUserId:(NSString *)userId1 userId2:(NSString *)userId2;
+- (void)createPrivateRoomWithUserId:(NSString *)userId1 userId2:(NSString *)userId2 roomName:(NSString *)roomName;
 - (void)sendMessageWithRoomId:(NSString *)roomId objectType:(NSString *)objectType message:(NSString *)message;
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime;
 - (void)joinRoom:(NSString *)roomId;

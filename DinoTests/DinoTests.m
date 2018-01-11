@@ -36,4 +36,11 @@
     }];
 }
 
+- (void)testDateString {
+    NSDateFormatter *rcfDateFormatter = [[NSDateFormatter alloc] init];
+    rcfDateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
+    NSString *dateStr = [rcfDateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"%@",dateStr);
+}
+
 @end
