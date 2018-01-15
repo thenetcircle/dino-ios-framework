@@ -58,8 +58,8 @@
         
     }];
     
-    [self.socketClient onAny:^(SocketAnyEvent * event) {
-        NSLog(@"any");
+    [self.socketClient on:@"message" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  message received  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
 }
 
@@ -126,7 +126,7 @@
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
     
-    [self.socketClient emit:@"join" with:@[@{@"verb":@"list", @"target":@{@"id":roomId}}]];
+    [self.socketClient emit:@"join" with:@[@{@"verb":@"join", @"target":@{@"id":roomId}}]];
 }
 
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime {

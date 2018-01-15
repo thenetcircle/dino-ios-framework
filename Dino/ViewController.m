@@ -14,10 +14,8 @@
 
 @interface ViewController ()
 {
-    IBOutlet    UILabel         *_user1IdLabel;
-    IBOutlet    UILabel         *_user2IdLabel;
-    IBOutlet    UITextField     *_user1TokenField;
-    IBOutlet    UITextField     *_user2TokenField;
+    IBOutlet    UITextField     *_userIdField;
+    IBOutlet    UITextField     *_userTokenField;
     IBOutlet    UITextField     *_roomIdField;
     IBOutlet    UITextField     *_channelIdField;
     IBOutlet    UITextField     *_messageField;
@@ -46,9 +44,9 @@
 }
 
 
-- (IBAction)user1Login:(UIButton *)button {
+- (IBAction)userLogin:(UIButton *)button {
     
-    IWLoginModel *model = [[IWLoginModel alloc] initWithToken:_user1TokenField.text userId:_user1IdLabel.text displayName:@"cool"];
+    IWLoginModel *model = [[IWLoginModel alloc] initWithToken:_userTokenField.text userId:_userIdField.text displayName:@"cool"];
     [self.socketService loginWithLoginModel:model];
     
 }
@@ -61,15 +59,9 @@
     [self.socketService listChannels];
 }
 
-
-- (IBAction)user2Login:(UIButton *)button {
-    IWLoginModel *model = [[IWLoginModel alloc] initWithToken:_user2TokenField.text userId:_user2IdLabel.text displayName:@"kkk"];
-    [self.socketService loginWithLoginModel:model];
-}
-
 - (IBAction)createRoom:(UIButton *)button {
-    [self.socketService createPrivateRoomWithUserId:_user1IdLabel.text
-                                            userId2:_user2IdLabel.text
+    [self.socketService createPrivateRoomWithUserId:@"179906"
+                                            userId2:@"3"
                                            roomName:_roomNameForCreateRoomField.text];
 }
 
