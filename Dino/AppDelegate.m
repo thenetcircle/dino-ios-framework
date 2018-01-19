@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-
+#import "IWCoreService.h"
 @interface AppDelegate ()
-
+@property (nonatomic, strong) IWCoreService *coreService;
 @end
 
 @implementation AppDelegate
@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.coreService = [IWCoreService sharedInstance];
     return YES;
 }
 

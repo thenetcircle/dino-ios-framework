@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033878FC2010698A00F673B4 /* IWLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 033878FB2010698A00F673B4 /* IWLoginModel.m */; };
+		033878FF201069C200F673B4 /* IWChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 033878FE201069C200F673B4 /* IWChannelModel.m */; };
+		0338790320107E8A00F673B4 /* IWLoginViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0338790220107E8A00F673B4 /* IWLoginViewViewController.m */; };
+		03387906201080E200F673B4 /* IWChannelListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03387905201080E200F673B4 /* IWChannelListTableViewController.m */; };
+		03387909201098DB00F673B4 /* IWRoomListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03387908201098DB00F673B4 /* IWRoomListTableViewController.m */; };
+		0338790C201098EE00F673B4 /* IWRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0338790B201098EE00F673B4 /* IWRoomModel.m */; };
+		0338790F2010A4FD00F673B4 /* IWChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0338790E2010A4FD00F673B4 /* IWChatViewController.m */; };
+		033879122010A57800F673B4 /* IWMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 033879112010A57800F673B4 /* IWMessageModel.m */; };
+		033879152010A6D800F673B4 /* IWCoreService.m in Sources */ = {isa = PBXBuildFile; fileRef = 033879142010A6D800F673B4 /* IWCoreService.m */; };
 		033D858F1FDFA1F400113EDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D858E1FDFA1F400113EDE /* AppDelegate.m */; };
 		033D85921FDFA1F400113EDE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D85911FDFA1F400113EDE /* ViewController.m */; };
 		033D85951FDFA1F400113EDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033D85931FDFA1F400113EDE /* Main.storyboard */; };
@@ -14,7 +23,7 @@
 		033D859A1FDFA1F400113EDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */; };
 		033D859D1FDFA1F400113EDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D859C1FDFA1F400113EDE /* main.m */; };
 		033D85A71FDFA1F400113EDE /* DinoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D85A61FDFA1F400113EDE /* DinoTests.m */; };
-		03DD672F1FE7C61000F8DACD /* IWLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD672E1FE7C61000F8DACD /* IWLoginModel.m */; };
+		03628FE620119E00005454BA /* IWDinoUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03628FE520119E00005454BA /* IWDinoUserModel.m */; };
 		03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */; };
 		03DD67351FE8F67200F8DACD /* IWDinoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD67341FE8F67200F8DACD /* IWDinoService.m */; };
 		8C8C5CEBABF829D6F79346AF /* Pods_Dino.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A104369C9E18C2BCFAAB82 /* Pods_Dino.framework */; };
@@ -32,6 +41,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		033878FA2010698A00F673B4 /* IWLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWLoginModel.h; sourceTree = "<group>"; };
+		033878FB2010698A00F673B4 /* IWLoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWLoginModel.m; sourceTree = "<group>"; };
+		033878FD201069C200F673B4 /* IWChannelModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWChannelModel.h; sourceTree = "<group>"; };
+		033878FE201069C200F673B4 /* IWChannelModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWChannelModel.m; sourceTree = "<group>"; };
+		0338790120107E8A00F673B4 /* IWLoginViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWLoginViewViewController.h; sourceTree = "<group>"; };
+		0338790220107E8A00F673B4 /* IWLoginViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWLoginViewViewController.m; sourceTree = "<group>"; };
+		03387904201080E200F673B4 /* IWChannelListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWChannelListTableViewController.h; sourceTree = "<group>"; };
+		03387905201080E200F673B4 /* IWChannelListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWChannelListTableViewController.m; sourceTree = "<group>"; };
+		03387907201098DB00F673B4 /* IWRoomListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWRoomListTableViewController.h; sourceTree = "<group>"; };
+		03387908201098DB00F673B4 /* IWRoomListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWRoomListTableViewController.m; sourceTree = "<group>"; };
+		0338790A201098EE00F673B4 /* IWRoomModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWRoomModel.h; sourceTree = "<group>"; };
+		0338790B201098EE00F673B4 /* IWRoomModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWRoomModel.m; sourceTree = "<group>"; };
+		0338790D2010A4FD00F673B4 /* IWChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWChatViewController.h; sourceTree = "<group>"; };
+		0338790E2010A4FD00F673B4 /* IWChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWChatViewController.m; sourceTree = "<group>"; };
+		033879102010A57800F673B4 /* IWMessageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWMessageModel.h; sourceTree = "<group>"; };
+		033879112010A57800F673B4 /* IWMessageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWMessageModel.m; sourceTree = "<group>"; };
+		033879132010A6D800F673B4 /* IWCoreService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWCoreService.h; sourceTree = "<group>"; };
+		033879142010A6D800F673B4 /* IWCoreService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWCoreService.m; sourceTree = "<group>"; };
 		033D858A1FDFA1F400113EDE /* Dino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033D858D1FDFA1F400113EDE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		033D858E1FDFA1F400113EDE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -45,8 +72,8 @@
 		033D85A21FDFA1F400113EDE /* DinoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DinoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		033D85A61FDFA1F400113EDE /* DinoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DinoTests.m; sourceTree = "<group>"; };
 		033D85A81FDFA1F400113EDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		03DD672D1FE7C61000F8DACD /* IWLoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWLoginModel.h; sourceTree = "<group>"; };
-		03DD672E1FE7C61000F8DACD /* IWLoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWLoginModel.m; sourceTree = "<group>"; };
+		03628FE420119E00005454BA /* IWDinoUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWDinoUserModel.h; sourceTree = "<group>"; };
+		03628FE520119E00005454BA /* IWDinoUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWDinoUserModel.m; sourceTree = "<group>"; };
 		03DD67301FE7C6A800F8DACD /* NSObject+IWJSONTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+IWJSONTool.h"; sourceTree = "<group>"; };
 		03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IWJSONTool.m"; sourceTree = "<group>"; };
 		03DD67331FE8F67200F8DACD /* IWDinoService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWDinoService.h; sourceTree = "<group>"; };
@@ -79,6 +106,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		033878F92010695400F673B4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				033878FA2010698A00F673B4 /* IWLoginModel.h */,
+				033878FB2010698A00F673B4 /* IWLoginModel.m */,
+				033878FD201069C200F673B4 /* IWChannelModel.h */,
+				033878FE201069C200F673B4 /* IWChannelModel.m */,
+				0338790A201098EE00F673B4 /* IWRoomModel.h */,
+				0338790B201098EE00F673B4 /* IWRoomModel.m */,
+				033879102010A57800F673B4 /* IWMessageModel.h */,
+				033879112010A57800F673B4 /* IWMessageModel.m */,
+				03628FE420119E00005454BA /* IWDinoUserModel.h */,
+				03628FE520119E00005454BA /* IWDinoUserModel.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0338790020107E7500F673B4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0338790120107E8A00F673B4 /* IWLoginViewViewController.h */,
+				0338790220107E8A00F673B4 /* IWLoginViewViewController.m */,
+				03387904201080E200F673B4 /* IWChannelListTableViewController.h */,
+				03387905201080E200F673B4 /* IWChannelListTableViewController.m */,
+				03387907201098DB00F673B4 /* IWRoomListTableViewController.h */,
+				03387908201098DB00F673B4 /* IWRoomListTableViewController.m */,
+				0338790D2010A4FD00F673B4 /* IWChatViewController.h */,
+				0338790E2010A4FD00F673B4 /* IWChatViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = SOURCE_ROOT;
+		};
 		033D85811FDFA1F400113EDE = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +161,8 @@
 		033D858C1FDFA1F400113EDE /* Dino */ = {
 			isa = PBXGroup;
 			children = (
+				0338790020107E7500F673B4 /* ViewControllers */,
+				033878F92010695400F673B4 /* Models */,
 				033D858D1FDFA1F400113EDE /* AppDelegate.h */,
 				033D858E1FDFA1F400113EDE /* AppDelegate.m */,
 				033D85901FDFA1F400113EDE /* ViewController.h */,
@@ -111,12 +172,12 @@
 				033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */,
 				033D859B1FDFA1F400113EDE /* Info.plist */,
 				033D859C1FDFA1F400113EDE /* main.m */,
-				03DD672D1FE7C61000F8DACD /* IWLoginModel.h */,
-				03DD672E1FE7C61000F8DACD /* IWLoginModel.m */,
 				03DD67301FE7C6A800F8DACD /* NSObject+IWJSONTool.h */,
 				03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */,
 				03DD67331FE8F67200F8DACD /* IWDinoService.h */,
 				03DD67341FE8F67200F8DACD /* IWDinoService.m */,
+				033879132010A6D800F673B4 /* IWCoreService.h */,
+				033879142010A6D800F673B4 /* IWCoreService.m */,
 			);
 			path = Dino;
 			sourceTree = "<group>";
@@ -362,12 +423,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03387909201098DB00F673B4 /* IWRoomListTableViewController.m in Sources */,
+				03628FE620119E00005454BA /* IWDinoUserModel.m in Sources */,
 				033D85921FDFA1F400113EDE /* ViewController.m in Sources */,
 				033D859D1FDFA1F400113EDE /* main.m in Sources */,
 				033D858F1FDFA1F400113EDE /* AppDelegate.m in Sources */,
-				03DD672F1FE7C61000F8DACD /* IWLoginModel.m in Sources */,
+				033879152010A6D800F673B4 /* IWCoreService.m in Sources */,
 				03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */,
+				033879122010A57800F673B4 /* IWMessageModel.m in Sources */,
+				033878FF201069C200F673B4 /* IWChannelModel.m in Sources */,
+				0338790320107E8A00F673B4 /* IWLoginViewViewController.m in Sources */,
+				0338790C201098EE00F673B4 /* IWRoomModel.m in Sources */,
+				0338790F2010A4FD00F673B4 /* IWChatViewController.m in Sources */,
+				033878FC2010698A00F673B4 /* IWLoginModel.m in Sources */,
 				03DD67351FE8F67200F8DACD /* IWDinoService.m in Sources */,
+				03387906201080E200F673B4 /* IWChannelListTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

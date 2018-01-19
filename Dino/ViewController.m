@@ -61,7 +61,7 @@
 
 - (IBAction)createRoom:(UIButton *)button {
     [self.socketService createPrivateRoomWithUserId:@"179906"
-                                            userId2:@"3"
+                                            userId2:@"179677"
                                            roomName:_roomNameForCreateRoomField.text];
 }
 
@@ -70,7 +70,14 @@
 }
 
 - (IBAction)sendMessage:(UIButton *)button {
-    [self.socketService sendMessageWithRoomId:_roomIdForMessageField.text objectType:@"room" message:_messageField.text];
+    [self.socketService sendMessageWithRoomId:_roomIdForMessageField.text
+                                   objectType:@"private"
+                                      message:_messageField.text
+                                   completion:^(IWMessageModel *message, IWDError *error) {
+        if (!error) {
+
+        }
+    }];
 }
 
 - (IBAction)getHistory:(UIButton *)button {
