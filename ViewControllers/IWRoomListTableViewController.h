@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "IWRoomModel.h"
+#import "IWChannelModel.h"
 @interface IWRoomListTableCell: UITableViewCell
 - (void)applyRoom:(IWRoomModel *)room;
 @end
 
-@interface IWRoomListTableViewController : UITableViewController
+@interface IWRoomListTableViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) IWChannelModel *channel;
 @property (nonatomic, strong) NSMutableArray *roomArray;
 @end

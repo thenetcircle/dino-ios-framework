@@ -8,6 +8,8 @@
 
 #import "IWRoomListTableViewController.h"
 #import "IWChatViewController.h"
+#import "IWRoomCreateView.h"
+#import "IWDinoUserModel.h"
 
 #define IWRoomListTableCellIdentifier @"IWRoomListTableCellIdentifier"
 
@@ -22,15 +24,44 @@
 }
 @end
 
-@interface IWRoomListTableViewController ()
-
+@interface IWRoomListTableViewController ()<IWRoomCreateViewDelegate>
+@property (nonatomic, strong) IWRoomCreateView *roomCreateView;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 @end
 
 @implementation IWRoomListTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *roomCreateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showRoomCreate)];
+    self.navigationItem.rightBarButtonItem = roomCreateButton;
+}
 
+- (void)showRoomCreate {
+    self.roomCreateView.hidden = NO;
+}
+
+- (void)createButtonPressed:(NSString *)targetUserId roomName:(NSString *)roomName {
+    [[IWDinoService sharedInstance] createPrivateRoomWithChannelId:self.channel.uid
+                                                            userId:[IWCoreService sharedInstance].currentUser.uid
+                                                        userId2:targetUserId
+                                                       roomName:roomName
+                                                     completion:^(IWRoomModel *room, IWDError *error) {
+                                                         if (!error) {
+                                                             
+                                                             NSIndexPath *index = [NSIndexPath indexPathForRow:self.roomArray.count inSection:0];
+                                                             [self.roomArray addObject:room];
+                                                             [self.tableView insertRowsAtIndexPaths:@[index] withRowAnimation:UITableViewRowAnimationAutomatic];
+                                                             [self.tableView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                                                         }else {
+                                                             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                                                                            message:error.domain
+                                                                                                                     preferredStyle:UIAlertControllerStyleAlert];
+                                                             
+                                                             [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+                                                             [self presentViewController:alert animated:YES completion:nil];
+                                                         }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +100,29 @@
     [self performSegueWithIdentifier:@"IWChatViewControllerSegue" sender:room];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    IWRoomModel *room = self.roomArray[indexPath.row];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [[IWDinoService sharedInstance] removeRoom:room.uid completion:^(IWDError *error) {
+            if (!error) {
+                [self.roomArray removeObjectAtIndex:indexPath.row];
+                [self.tableView reloadData];
+            }else {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                               message:error.domain
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }];
+    }
+}
+
 
 #pragma mark - getter / setter
 - (void)setRoomArray:(NSMutableArray *)roomArray {
@@ -76,5 +130,16 @@
         _roomArray = roomArray;
         [self.tableView reloadData];
     }
+}
+
+- (IWRoomCreateView *)roomCreateView {
+    if (!_roomCreateView) {
+        _roomCreateView = [[NSBundle mainBundle] loadNibNamed:@"IWRoomCreateView" owner:self options:0][0];
+        _roomCreateView.frame = self.view.bounds;
+        _roomCreateView.hidden = YES;
+        _roomCreateView.delegate = self;
+        [self.view addSubview:_roomCreateView];
+    }
+    return _roomCreateView;
 }
 @end

@@ -60,9 +60,9 @@
 }
 
 - (IBAction)createRoom:(UIButton *)button {
-    [self.socketService createPrivateRoomWithUserId:@"179906"
-                                            userId2:@"179677"
-                                           roomName:_roomNameForCreateRoomField.text];
+//    [self.socketService createPrivateRoomWithUserId:@"179906"
+//                                            userId2:@"179677"
+//                                           roomName:_roomNameForCreateRoomField.text];
 }
 
 - (IBAction)joinRoom:(UIButton *)button {

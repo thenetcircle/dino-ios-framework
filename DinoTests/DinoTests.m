@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-
+#import "IWDinoService.h"
 @interface DinoTests : XCTestCase
 
 @end
@@ -41,6 +41,11 @@
     rcfDateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
     NSString *dateStr = [rcfDateFormatter stringFromDate:[NSDate date]];
     NSLog(@"%@",dateStr);
+}
+
+- (void)testListChannels {
+    [[IWDinoService sharedInstance] listChannels];
+    [NSThread sleepForTimeInterval:10];
 }
 
 @end

@@ -19,18 +19,21 @@
 @protocol IWDinoServiceDelegate
 
 @optional
-- (void)didReceiveChannels:(NSArray<IWChannelModel *> *)channels;
-- (void)didReceiveRooms:(NSArray<IWRoomModel *> *)rooms;
-- (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages;
-- (void)didLogin:(BOOL)succeed;
-- (void)didJoin:(BOOL)succeed;
+- (void)didReceiveChannels:(NSArray<IWChannelModel *> *)channels error:(IWDError *)error;
+- (void)didReceiveRooms:(NSArray<IWRoomModel *> *)rooms error:(IWDError *)error;
+- (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error;
+- (void)didLogin:(IWDError *)error;
+- (void)didJoin:(IWDError *)error;
 @end
 
-typedef void (^IWDAckBlock)(IWDError *error);
+typedef void (^IWDBlock)(IWDError *error);
+typedef void (^IWDRoomCreateBlock)(IWRoomModel *room, IWDError *error);
 @interface IWDinoService : NSObject
 AS_SINGLETON;
 
 - (void)addDelegate:(id)delegate;
+- (void)removeDelegate:(id)delegate;
+- (void)removeAllDelegates;
 
 - (void)connect;
 - (void)disconnect;
@@ -38,14 +41,19 @@ AS_SINGLETON;
 - (void)loginWithLoginModel:(IWLoginModel *)loginModel;
 - (void)listChannels;
 - (void)listRoomsWithChannelId:(NSString *)channelId;
-- (void)createPrivateRoomWithUserId:(NSString *)userId1 userId2:(NSString *)userId2 roomName:(NSString *)roomName;
+- (void)createPrivateRoomWithChannelId:(NSString *)channelId
+                                userId:(NSString *)userId1
+                               userId2:(NSString *)userId2
+                              roomName:(NSString *)roomName
+                            completion:(IWDRoomCreateBlock)completion;
 - (void)joinRoom:(NSString *)roomId;
+- (void)removeRoom:(NSString *)roomId completion:(IWDBlock)completion;
 - (void)sendMessageWithRoomId:(NSString *)roomId
                    objectType:(NSString *)objectType
                       message:(NSString *)message
                    completion:(void (^)(IWMessageModel *message, IWDError *error))completion;
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime;
 
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDAckBlock)completion;
-- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDAckBlock)completion;
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion;
+- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion;
 @end
