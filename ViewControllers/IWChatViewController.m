@@ -60,7 +60,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages {
+- (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error{
+    if (error) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:error.domain
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
     for (IWMessageModel *message in messages) {
         if (![message.roomId isEqualToString:self.room.uid] || [message.sender.uid isEqualToString:[IWCoreService sharedInstance].currentUser.uid]) {
             continue;
@@ -87,10 +96,17 @@
     }];
 }
 
-- (void)didJoin:(BOOL)succeed {
-    if (succeed) {
+- (void)didJoin:(IWDError *)error {
+    if (!error) {
         _labelMessage.enabled = YES;
         _buttonSend.enabled = YES;
+    }else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:error.domain
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
@@ -121,6 +137,10 @@
     IWChatListTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IWChatListTableCellIdentifier"];
     [cell applyMessage:message];
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0 )];
 }
 
 #pragma  mark - getter / setter

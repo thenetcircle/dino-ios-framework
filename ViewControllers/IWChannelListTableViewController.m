@@ -16,7 +16,7 @@
 @end
 
 @interface IWChannelListTableViewController()<IWDinoServiceDelegate>
-
+@property (nonatomic, strong) IWChannelModel *selectChannel;
 @end
 
 @implementation IWChannelListTableCell
@@ -31,6 +31,11 @@
 @end
 
 @implementation IWChannelListTableViewController
+
+- (void)dealloc {
+    [[IWDinoService sharedInstance] removeDelegate:self];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,6 +53,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     IWRoomListTableViewController *vc = (IWRoomListTableViewController *)segue.destinationViewController;
+    vc.channel = self.selectChannel;
     vc.roomArray = sender;
 }
 
@@ -58,7 +64,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.channelArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -74,12 +80,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     IWChannelModel *channel = self.channelArray[indexPath.row];
+    self.selectChannel = channel;
     [[IWDinoService sharedInstance] listRoomsWithChannelId:channel.uid];
 }
 
-- (void)didReceiveRooms:(NSArray *)rooms {
-    if (rooms) {
+- (void)didReceiveRooms:(NSArray *)rooms error:(IWDError *)error{
+    if (!error) {
         [self performSegueWithIdentifier:@"IWRoomListTableViewControllerSegue" sender:rooms];
+    }else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:error.domain
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
@@ -88,8 +102,6 @@
 - (void)setChannelArray:(NSMutableArray *)channelArray {
     if (_channelArray != channelArray) {
         _channelArray = channelArray;
-        [self.tableView reloadData];
     }
-    
 }
 @end

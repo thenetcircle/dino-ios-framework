@@ -38,8 +38,8 @@
     vc.channelArray = sender;
 }
 
-- (void)didLogin:(BOOL)succeed {
-    if (succeed) {
+- (void)didLogin:(IWDError *)error {
+    if (!error) {
         
         IWDinoUserModel *user = [[IWDinoUserModel alloc] initWithUid:_fieldUserID.text
                                                                token:_fieldToken.text
@@ -48,11 +48,26 @@
         
         [self listChannels];
     }
+    else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:error.domain
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
-- (void)didReceiveChannels:(NSArray *)channels {
-    if (channels) {
+- (void)didReceiveChannels:(NSArray *)channels error:(IWDError *)error{
+    if (!error) {
         [self performSegueWithIdentifier:@"IWChannelListTableViewControllerSegue" sender:channels];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:error.domain
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 

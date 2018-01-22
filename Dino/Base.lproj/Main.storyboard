@@ -324,10 +324,10 @@
             </objects>
             <point key="canvasLocation" x="47" y="87"/>
         </scene>
-        <!--Chinnal-->
+        <!--Channel-->
         <scene sceneID="l8F-ea-FNn">
             <objects>
-                <tableViewController title="Chinnal" id="or0-p3-QSm" customClass="IWChannelListTableViewController" sceneMemberID="viewController">
+                <tableViewController title="Channel" id="or0-p3-QSm" customClass="IWChannelListTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="DJN-Nm-lKH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -365,59 +365,73 @@
                     </tableView>
                     <connections>
                         <outlet property="view" destination="DJN-Nm-lKH" id="rmm-Ge-X5A"/>
-                        <segue destination="TWd-Sk-7EI" kind="show" identifier="IWRoomListTableViewControllerSegue" id="4xm-UO-hPu"/>
+                        <segue destination="LQi-IG-OcL" kind="show" identifier="IWRoomListTableViewControllerSegue" id="8xG-hY-Js8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qQd-s2-pfo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1698" y="753"/>
         </scene>
-        <!--Room-->
-        <scene sceneID="xyG-kP-uQg">
+        <!--Room List Table View Controller-->
+        <scene sceneID="cwc-Ph-Gf5">
             <objects>
-                <tableViewController title="Room" id="TWd-Sk-7EI" customClass="IWRoomListTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="JJ9-Yq-7xs">
+                <viewController id="LQi-IG-OcL" customClass="IWRoomListTableViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kM4-71-F7G">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="IWRoomListTableCellIdentifier" id="e2g-xe-pgx" customClass="IWRoomListTableCell">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e2g-xe-pgx" id="8qG-Tw-Mjh">
-                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Zh-46-wuE">
-                                            <rect key="frame" x="20" y="12" width="311" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="1Zh-46-wuE" firstAttribute="centerY" secondItem="8qG-Tw-Mjh" secondAttribute="centerY" id="SJa-Do-C7A"/>
-                                        <constraint firstItem="1Zh-46-wuE" firstAttribute="leading" secondItem="8qG-Tw-Mjh" secondAttribute="leading" constant="20" id="VGK-gj-hII"/>
-                                        <constraint firstAttribute="trailing" secondItem="1Zh-46-wuE" secondAttribute="trailing" constant="10" id="yN3-9F-1uJ"/>
-                                    </constraints>
-                                </tableViewCellContentView>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MPZ-W5-CEU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="IWRoomListTableCellIdentifier" id="LPd-Vb-bml" customClass="IWRoomListTableCell">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LPd-Vb-bml" id="ObM-vg-tPh">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2h0-cI-Bfg">
+                                                    <rect key="frame" x="20" y="12" width="312" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2h0-cI-Bfg" firstAttribute="centerY" secondItem="ObM-vg-tPh" secondAttribute="centerY" id="TvW-Kk-Pk1"/>
+                                                <constraint firstItem="2h0-cI-Bfg" firstAttribute="leading" secondItem="ObM-vg-tPh" secondAttribute="leading" constant="20" id="bTS-FG-FhD"/>
+                                                <constraint firstAttribute="trailing" secondItem="2h0-cI-Bfg" secondAttribute="trailing" constant="10" id="dC4-Pi-EkC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="_labelRoomName" destination="2h0-cI-Bfg" id="vmB-P6-Ld7"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
-                                    <outlet property="_labelRoomName" destination="1Zh-46-wuE" id="l9G-GQ-ZoR"/>
+                                    <outlet property="dataSource" destination="LQi-IG-OcL" id="4Y3-pE-FIA"/>
+                                    <outlet property="delegate" destination="LQi-IG-OcL" id="3OF-wv-lSJ"/>
                                 </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="TWd-Sk-7EI" id="iO1-fl-mcI"/>
-                            <outlet property="delegate" destination="TWd-Sk-7EI" id="2N5-ag-d5C"/>
-                        </connections>
-                    </tableView>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MPZ-W5-CEU" firstAttribute="top" secondItem="kM4-71-F7G" secondAttribute="top" id="efy-gW-KUM"/>
+                            <constraint firstItem="MPZ-W5-CEU" firstAttribute="leading" secondItem="kM4-71-F7G" secondAttribute="leading" id="k3s-1M-ALU"/>
+                            <constraint firstItem="wtN-7z-Pd4" firstAttribute="bottom" secondItem="MPZ-W5-CEU" secondAttribute="bottom" id="ozt-Gj-W1S"/>
+                            <constraint firstItem="wtN-7z-Pd4" firstAttribute="trailing" secondItem="MPZ-W5-CEU" secondAttribute="trailing" id="r5S-b1-weu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wtN-7z-Pd4"/>
+                    </view>
                     <connections>
-                        <segue destination="Q8a-Li-VVD" kind="show" identifier="IWChatViewControllerSegue" id="e7C-i0-IWb"/>
+                        <outlet property="tableView" destination="MPZ-W5-CEU" id="X2w-As-Yoi"/>
+                        <segue destination="Q8a-Li-VVD" kind="show" identifier="IWChatViewControllerSegue" id="kfW-6o-Bmm"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uOG-0K-mgv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HAq-6t-eIt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2604" y="752"/>
+            <point key="canvasLocation" x="2713" y="754"/>
         </scene>
         <!--Chat-->
         <scene sceneID="SvJ-La-Oe2">
@@ -516,7 +530,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bot-ro-la6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3693.5999999999999" y="751.57421289355329"/>
+            <point key="canvasLocation" x="3682" y="754"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fkd-0J-z1w">

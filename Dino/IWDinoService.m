@@ -78,12 +78,17 @@ DEF_SINGLETON
     
     [self.socketClient on:@"message" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  message received  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
         for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didReceiveMessages:)]) {
+            if ([delegate respondsToSelector:@selector(didReceiveMessages:error:)]) {
+                if (error) {
+                    [delegate didReceiveMessages:[NSArray array] error:error];
+                    return;
+                }
                 IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0]];
                 NSString *roomId = data[0][@"target"][@"id"];
                 message.roomId = roomId;
-                [delegate didReceiveMessages:@[message]];
+                [delegate didReceiveMessages:@[message] error:nil];
             }
         }
     }];
@@ -93,9 +98,10 @@ DEF_SINGLETON
 - (void)loginWithLoginModel:(IWLoginModel *)loginModel {
     [self.socketClient on:@"gn_login" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_login  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
         for (id delegate in self.delegates) {
             if ([delegate respondsToSelector:@selector(didLogin:)]) {
-                [delegate didLogin:YES];
+                [delegate didLogin:error];
             }
         }
         [self.socketClient off:@"gn_login"];
@@ -103,10 +109,22 @@ DEF_SINGLETON
     [self.socketClient emit:@"login" with:@[loginModel.dictionary]];
 }
 
+
 - (void)listChannels {
     
     [self.socketClient on:@"gn_list_channels" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_list_channels  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
+        if (error) {
+            for (id delegate in self.delegates) {
+                if ([delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
+                    [delegate didReceiveChannels:@[] error:error];
+                }
+            }
+            [self.socketClient off:@"gn_list_channels"];
+            return;
+        }
+        
         NSArray *channelArray = data[0][@"data"][@"object"][@"attachments"];
         NSMutableArray *channels = [@[] mutableCopy];
         for (NSDictionary *dic in channelArray) {
@@ -115,8 +133,8 @@ DEF_SINGLETON
         }
         
         for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didReceiveChannels:)]) {
-                [delegate didReceiveChannels:channels];
+            if ([delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
+                [delegate didReceiveChannels:channels error:nil];
             }
         }
         [self.socketClient off:@"gn_list_channels"];
@@ -129,16 +147,27 @@ DEF_SINGLETON
     
     [self.socketClient on:@"gn_list_rooms" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_list_rooms  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
+        if (error) {
+            for (id delegate in self.delegates) {
+                if ([delegate respondsToSelector:@selector(didReceiveRooms: error:)]) {
+                    [delegate didReceiveRooms:@[] error:error];
+                }
+            }
+            [self.socketClient off:@"gn_list_rooms"];
+            return;
+        }
+        
         NSArray *roomArray = data[0][@"data"][@"object"][@"attachments"];
         NSMutableArray *rooms = [@[] mutableCopy];
         for (NSDictionary *dic in roomArray) {
-            IWChannelModel *room = [[IWChannelModel alloc] initWithDinoResponse:dic];
+            IWRoomModel *room = [[IWRoomModel alloc] initWithDinoResponse:dic];
             [rooms addObject:room];
         }
         
         for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didReceiveRooms:)]) {
-                [delegate didReceiveRooms:rooms];
+            if ([delegate respondsToSelector:@selector(didReceiveRooms: error:)]) {
+                [delegate didReceiveRooms:rooms error:nil];
             }
         }
         [self.socketClient off:@"gn_list_rooms"];
@@ -156,8 +185,13 @@ DEF_SINGLETON
     
     [self.socketClient on:@"gn_message" callback:^(NSArray *data, SocketAckEmitter *ack) {
         if (completion) {
-            IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0][@"data"]];
-            completion(message, nil);
+            IWDError *error = [self errorFromResponse:data];
+            if(error){
+                completion(nil, error);
+            }else {
+                IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0][@"data"]];
+                completion(message, nil);
+            }
         }
         [self.socketClient off:@"gn_message"];
     }];
@@ -166,10 +200,23 @@ DEF_SINGLETON
 }
 
 
-- (void)createPrivateRoomWithUserId:(NSString *)userId1 userId2:(NSString *)userId2 roomName:(NSString *)roomName{
+- (void)createPrivateRoomWithChannelId:(NSString *)channelId
+                                userId:(NSString *)userId1
+                            userId2:(NSString *)userId2
+                           roomName:(NSString *)roomName
+                         completion:(IWDRoomCreateBlock)completion {
     
     [self.socketClient on:@"gn_create" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
+        if (completion) {
+            if (!error) {
+                IWRoomModel *room = [[IWRoomModel alloc] initWithDinoResponse:data[0][@"data"][@"target"]];
+                completion(room, nil);
+            }else {
+                completion(nil, error);
+            }
+        }
         [self.socketClient off:@"gn_create"];
     }];
     
@@ -179,7 +226,7 @@ DEF_SINGLETON
                                    @"object":@{@"url":@"6cba7e00-6b0e-4bee-ad59-98bf90813fd0"},
                                    @"target": @{@"displayName"  : [[roomName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
                                                 @"objectType"   : @"private",
-                                                @"attatchments" : @[@{@"objectType" : @"owners",
+                                                @"attachments" : @[@{@"objectType" : @"owners",
                                                                       @"summary"    : summary
                                                                       }]
                                                 }
@@ -190,9 +237,10 @@ DEF_SINGLETON
 - (void)joinRoom:(NSString *)roomId {
     [self.socketClient on:@"gn_join" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_join  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
         for (id delegate in self.delegates) {
             if ([delegate respondsToSelector:@selector(didJoin:)]) {
-                [delegate didJoin:YES];
+                [delegate didJoin:error];
             }
         }
         [self.socketClient off:@"gn_join"];
@@ -242,13 +290,28 @@ DEF_SINGLETON
     [self.socketClient emit:@"read" with: @[@{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}}]];
 }
 
-
-
+- (IWDError *)errorFromResponse:(NSArray *)data {
+    IWDError *error = nil;
+    if (data[0] && data[0][@"error"]) {
+        error = [[IWDError alloc] initWithDomain:data[0][@"error"] code:[data[0][@"status_code"] integerValue] userInfo:nil];
+    }
+    return error;
+}
 
 - (void)addDelegate:(id)delegate {
     if (![self.delegates containsObject:delegate]) {
         [self.delegates addObject:delegate];
     }
+}
+
+- (void)removeDelegate:(id)delegate {
+    if ([self.delegates containsObject: delegate]) {
+        [self.delegates removeObject: delegate];
+    }
+}
+
+- (void)removeAllDelegates {
+    [self.delegates removeAllObjects];
 }
 
 

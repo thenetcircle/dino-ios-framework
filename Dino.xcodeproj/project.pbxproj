@@ -23,6 +23,8 @@
 		033D859A1FDFA1F400113EDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */; };
 		033D859D1FDFA1F400113EDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D859C1FDFA1F400113EDE /* main.m */; };
 		033D85A71FDFA1F400113EDE /* DinoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D85A61FDFA1F400113EDE /* DinoTests.m */; };
+		035F38F02015B940000B51EC /* IWRoomCreateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 035F38EF2015B940000B51EC /* IWRoomCreateView.xib */; };
+		035F38F32015B962000B51EC /* IWRoomCreateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38F22015B962000B51EC /* IWRoomCreateView.m */; };
 		03628FE620119E00005454BA /* IWDinoUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03628FE520119E00005454BA /* IWDinoUserModel.m */; };
 		03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */; };
 		03DD67351FE8F67200F8DACD /* IWDinoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD67341FE8F67200F8DACD /* IWDinoService.m */; };
@@ -72,6 +74,9 @@
 		033D85A21FDFA1F400113EDE /* DinoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DinoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		033D85A61FDFA1F400113EDE /* DinoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DinoTests.m; sourceTree = "<group>"; };
 		033D85A81FDFA1F400113EDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		035F38EF2015B940000B51EC /* IWRoomCreateView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IWRoomCreateView.xib; sourceTree = "<group>"; };
+		035F38F12015B962000B51EC /* IWRoomCreateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWRoomCreateView.h; sourceTree = "<group>"; };
+		035F38F22015B962000B51EC /* IWRoomCreateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWRoomCreateView.m; sourceTree = "<group>"; };
 		03628FE420119E00005454BA /* IWDinoUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWDinoUserModel.h; sourceTree = "<group>"; };
 		03628FE520119E00005454BA /* IWDinoUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWDinoUserModel.m; sourceTree = "<group>"; };
 		03DD67301FE7C6A800F8DACD /* NSObject+IWJSONTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+IWJSONTool.h"; sourceTree = "<group>"; };
@@ -161,6 +166,7 @@
 		033D858C1FDFA1F400113EDE /* Dino */ = {
 			isa = PBXGroup;
 			children = (
+				035F38EE2015B91D000B51EC /* Views */,
 				0338790020107E7500F673B4 /* ViewControllers */,
 				033878F92010695400F673B4 /* Models */,
 				033D858D1FDFA1F400113EDE /* AppDelegate.h */,
@@ -190,6 +196,16 @@
 			);
 			path = DinoTests;
 			sourceTree = "<group>";
+		};
+		035F38EE2015B91D000B51EC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				035F38F12015B962000B51EC /* IWRoomCreateView.h */,
+				035F38F22015B962000B51EC /* IWRoomCreateView.m */,
+				035F38EF2015B940000B51EC /* IWRoomCreateView.xib */,
+			);
+			path = Views;
+			sourceTree = SOURCE_ROOT;
 		};
 		49E5502D7356DF5E1614DB94 /* Frameworks */ = {
 			isa = PBXGroup;
@@ -300,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				033D859A1FDFA1F400113EDE /* LaunchScreen.storyboard in Resources */,
+				035F38F02015B940000B51EC /* IWRoomCreateView.xib in Resources */,
 				033D85971FDFA1F400113EDE /* Assets.xcassets in Resources */,
 				033D85951FDFA1F400113EDE /* Main.storyboard in Resources */,
 			);
@@ -432,6 +449,7 @@
 				03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */,
 				033879122010A57800F673B4 /* IWMessageModel.m in Sources */,
 				033878FF201069C200F673B4 /* IWChannelModel.m in Sources */,
+				035F38F32015B962000B51EC /* IWRoomCreateView.m in Sources */,
 				0338790320107E8A00F673B4 /* IWLoginViewViewController.m in Sources */,
 				0338790C201098EE00F673B4 /* IWRoomModel.m in Sources */,
 				0338790F2010A4FD00F673B4 /* IWChatViewController.m in Sources */,
