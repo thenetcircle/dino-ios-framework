@@ -26,7 +26,7 @@
 - (void)didJoin:(IWDError *)error;
 @end
 
-typedef void (^IWDAckBlock)(IWDError *error);
+typedef void (^IWDBlock)(IWDError *error);
 typedef void (^IWDRoomCreateBlock)(IWRoomModel *room, IWDError *error);
 @interface IWDinoService : NSObject
 AS_SINGLETON;
@@ -47,12 +47,13 @@ AS_SINGLETON;
                               roomName:(NSString *)roomName
                             completion:(IWDRoomCreateBlock)completion;
 - (void)joinRoom:(NSString *)roomId;
+- (void)removeRoom:(NSString *)roomId completion:(IWDBlock)completion;
 - (void)sendMessageWithRoomId:(NSString *)roomId
                    objectType:(NSString *)objectType
                       message:(NSString *)message
                    completion:(void (^)(IWMessageModel *message, IWDError *error))completion;
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime;
 
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDAckBlock)completion;
-- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDAckBlock)completion;
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion;
+- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion;
 @end

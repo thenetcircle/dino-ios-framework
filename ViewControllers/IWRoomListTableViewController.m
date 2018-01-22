@@ -100,6 +100,29 @@
     [self performSegueWithIdentifier:@"IWChatViewControllerSegue" sender:room];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    IWRoomModel *room = self.roomArray[indexPath.row];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [[IWDinoService sharedInstance] removeRoom:room.uid completion:^(IWDError *error) {
+            if (!error) {
+                [self.roomArray removeObjectAtIndex:indexPath.row];
+                [self.tableView reloadData];
+            }else {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                               message:error.domain
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }];
+    }
+}
+
 
 #pragma mark - getter / setter
 - (void)setRoomArray:(NSMutableArray *)roomArray {

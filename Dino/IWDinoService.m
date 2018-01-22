@@ -234,6 +234,19 @@ DEF_SINGLETON
     [self.socketClient emit:@"create" with:@[createModel]];
 }
 
+- (void)removeRoom:(NSString *)roomId completion:(IWDBlock)completion {
+    [self.socketClient on:@"gn_remove_room" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        if (completion) {
+            IWDError *error = [self errorFromResponse:data];
+            completion(error);
+        }
+        [self.socketClient off:@"gn_remove_room"];
+    }];
+    
+    [self.socketClient emit:@"remove_room" with: @[@{@"verb" : @"remove", @"target" : @{@"id" : roomId}}]];
+}
+
+
 - (void)joinRoom:(NSString *)roomId {
     [self.socketClient on:@"gn_join" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_join  <<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -258,11 +271,12 @@ DEF_SINGLETON
     [self.socketClient emit:@"history" with:@[@{@"verb":@"list", @"updated":updateTime ,@"target":@{@"id":roomId, @"objectType":@"private"}}]];
 }
 
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDAckBlock)completion{
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion {
     
     [self.socketClient on:@"gn_received" callback:^(NSArray *data, SocketAckEmitter *ack) {
         if (completion) {
-            completion(nil);
+            IWDError *error = [self errorFromResponse:data];
+            completion(error);
         }
         [self.socketClient off:@"gn_received"];
     }];
@@ -274,11 +288,12 @@ DEF_SINGLETON
     [self.socketClient emit:@"received" with: @[@{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}}]];
 }
 
-- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDAckBlock)completion {
+- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion {
     
     [self.socketClient on:@"gn_read" callback:^(NSArray *data, SocketAckEmitter *ack) {
         if (completion) {
-            completion(nil);
+            IWDError *error = [self errorFromResponse:data];
+            completion(error);
         }
          [self.socketClient off:@"gn_read"];
     }];
