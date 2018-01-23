@@ -76,6 +76,36 @@ DEF_SINGLETON
         
     }];
     
+    [self.socketClient on:@"gn_message_received" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message_received  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
+        for (id delegate in self.delegates) {
+            if ([delegate respondsToSelector:@selector(didMessageDelivered:error:)]) {
+                if (error) {
+                    [delegate didMessageDelivered:nil error:error];
+                    return;
+                }
+                IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0]];
+                [delegate didMessageDelivered:message error:nil];
+            }
+        }
+    }];
+    
+    [self.socketClient on:@"gn_message_read" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message_read  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
+        for (id delegate in self.delegates) {
+            if ([delegate respondsToSelector:@selector(didMessageRead: error:)]) {
+                if (error) {
+                    [delegate didMessageDelivered:nil error:error];
+                    return;
+                }
+                IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0]];
+                [delegate didMessageRead:message error:nil];
+            }
+        }
+    }];
+    
     [self.socketClient on:@"message" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  message received  <<<<<<<<<<<<<<<<<<<<<<<<<");
         IWDError *error = [self errorFromResponse:data];
@@ -271,15 +301,8 @@ DEF_SINGLETON
     [self.socketClient emit:@"history" with:@[@{@"verb":@"list", @"updated":updateTime ,@"target":@{@"id":roomId, @"objectType":@"private"}}]];
 }
 
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion {
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages {
     
-    [self.socketClient on:@"gn_received" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        if (completion) {
-            IWDError *error = [self errorFromResponse:data];
-            completion(error);
-        }
-        [self.socketClient off:@"gn_received"];
-    }];
     NSMutableArray *messageArray = [@[] mutableCopy];
     for (IWMessageModel *message in messages) {
         [messageArray addObject:@{@"id" : message.uid}];
@@ -288,15 +311,8 @@ DEF_SINGLETON
     [self.socketClient emit:@"received" with: @[@{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}}]];
 }
 
-- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion {
-    
-    [self.socketClient on:@"gn_read" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        if (completion) {
-            IWDError *error = [self errorFromResponse:data];
-            completion(error);
-        }
-         [self.socketClient off:@"gn_read"];
-    }];
+- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages {
+
     NSMutableArray *messageArray = [@[] mutableCopy];
     for (IWMessageModel *message in messages) {
         [messageArray addObject:@{@"id" : message.uid}];

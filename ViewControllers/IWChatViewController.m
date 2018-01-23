@@ -60,7 +60,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error{
+- (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error {
     if (error) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:error.domain
@@ -70,18 +70,29 @@
         [self presentViewController:alert animated:YES completion:nil];
         return;
     }
+    NSMutableArray *messagesFromOthersForCurrentRoom = [@[] mutableCopy];
     for (IWMessageModel *message in messages) {
         if (![message.roomId isEqualToString:self.room.uid] || [message.sender.uid isEqualToString:[IWCoreService sharedInstance].currentUser.uid]) {
             continue;
         }
-        [[IWDinoService sharedInstance] sentAckReceived:self.room.uid messages:@[message] completion:^(IWDError *error) {
-            
-        }];
-        [[IWDinoService sharedInstance] sentAckRead:self.room.uid messages:@[message] completion:^(IWDError *error) {
-            
-        }];
-        [self addMessages:@[message]];
-    } 
+        [messagesFromOthersForCurrentRoom addObject:message];
+    }
+    [[IWDinoService sharedInstance] sentAckReceived:self.room.uid messages:messagesFromOthersForCurrentRoom];
+    [[IWDinoService sharedInstance] sentAckRead:self.room.uid messages:messagesFromOthersForCurrentRoom];
+    [self addMessages:messagesFromOthersForCurrentRoom];
+}
+
+- (void)didMessageDelivered:(IWMessageModel *)message error:(IWDError *)error {
+    if (error) {
+        return;
+    }
+    
+}
+
+- (void)didMessageRead:(IWMessageModel *)message error:(IWDError *)error {
+    if (error) {
+        return;
+    }
 }
 
 - (IBAction)send:(UIButton *)button {

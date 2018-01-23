@@ -22,6 +22,8 @@
 - (void)didReceiveChannels:(NSArray<IWChannelModel *> *)channels error:(IWDError *)error;
 - (void)didReceiveRooms:(NSArray<IWRoomModel *> *)rooms error:(IWDError *)error;
 - (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error;
+- (void)didMessageDelivered:(IWMessageModel *)message error:(IWDError *)error;
+- (void)didMessageRead:(IWMessageModel *)message error:(IWDError *)error;
 - (void)didLogin:(IWDError *)error;
 - (void)didJoin:(IWDError *)error;
 @end
@@ -54,6 +56,6 @@ AS_SINGLETON;
                    completion:(void (^)(IWMessageModel *message, IWDError *error))completion;
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime;
 
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion;
-- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages completion:(IWDBlock)completion;
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages;
+- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages;
 @end
