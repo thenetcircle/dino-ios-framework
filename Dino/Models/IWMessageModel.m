@@ -29,4 +29,27 @@
     
     return self;
 }
+
+- (NSString *)displayStatus {
+    switch (self.status.integerValue) {
+        case IWDMessageStatusUnknown:
+            return @"Unknown";
+            break;
+        case IWDMessageStatusSending:
+            return @"Sending";
+            break;
+        case IWDMessageStatusSent:
+            return @"Sent";
+            break;
+        case IWDMessageStatusDelivered:
+            return @"Delivered";
+            break;
+        case IWDMessageStatusRead:
+            return @"Read";
+            break;
+        default:
+            break;
+    }
+    return @"Unknown";
+}
 @end

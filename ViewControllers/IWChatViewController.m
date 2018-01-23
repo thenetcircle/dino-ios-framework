@@ -12,6 +12,7 @@
 
 @interface IWChatListTableCell() {
     IBOutlet    UILabel     *_labelMessage;
+    IBOutlet    UILabel     *_lableMessageStatus;
 }
 
 @end
@@ -23,6 +24,8 @@
     }else {
         _labelMessage.textAlignment = NSTextAlignmentLeft;
     }
+    _lableMessageStatus.hidden = ![self isSentByMyself:message];
+    _lableMessageStatus.text = message.displayStatus;
     _labelMessage.text = message.content;
 }
 
@@ -86,12 +89,23 @@
     if (error) {
         return;
     }
-    
+    for (IWMessageModel *msg in self.messageArray) {
+        if ([msg.uid isEqualToString:message.uid]) {
+            msg.status = @(IWDMessageStatusDelivered);
+            break;
+        }
+    }
 }
 
 - (void)didMessageRead:(IWMessageModel *)message error:(IWDError *)error {
     if (error) {
         return;
+    }
+    for (IWMessageModel *msg in self.messageArray) {
+        if ([msg.uid isEqualToString:message.uid]) {
+            msg.status = @(IWDMessageStatusRead);
+            break;
+        }
     }
 }
 
@@ -101,6 +115,7 @@
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message  <<<<<<<<<<<<<<<<<<<<<<<<<");
         if (!error) {
             message.sender = [IWCoreService sharedInstance].currentUser;
+            message.status = @(IWDMessageStatusSent);
             _labelMessage.text = @"";
             [self addMessages:@[message]];
         }

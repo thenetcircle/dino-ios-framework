@@ -10,11 +10,22 @@
 @class IWDinoUserModel;
 @class IWRoomModel;
 
+typedef NS_ENUM(NSInteger, IWDMessageStatus) {
+    IWDMessageStatusUnknown = 0,
+    IWDMessageStatusSending = 1,
+    IWDMessageStatusSent,
+    IWDMessageStatusDelivered,
+    IWDMessageStatusRead
+};
+
 @interface IWMessageModel : NSObject
-@property (nonatomic, copy) NSString *uid;
-@property (nonatomic, copy) NSString *content;
-@property (nonatomic, copy) NSString *roomId;
-@property (nonatomic, strong) IWDinoUserModel *sender;
+@property (nonatomic, copy)     NSString        *uid;
+@property (nonatomic, copy)     NSString        *content;
+@property (nonatomic, copy)     NSString        *roomId;
+@property (nonatomic, strong)   NSNumber        *status;
+@property (nonatomic, readonly)   NSString        *displayStatus;
+@property (nonatomic, strong)   IWDinoUserModel *sender;
+
 
 - (instancetype)initWithDinoResponse:(NSDictionary *)dic;
 @end

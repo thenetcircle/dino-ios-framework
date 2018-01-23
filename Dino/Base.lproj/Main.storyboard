@@ -453,20 +453,29 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b7P-XX-iYK">
-                                                    <rect key="frame" x="10" y="11" width="355" height="21"/>
+                                                    <rect key="frame" x="10" y="11" width="315" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="D" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3DW-Dt-K6N">
+                                                    <rect key="frame" x="360" y="14" width="10" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="13"/>
+                                                    <color key="textColor" red="0.88235294119999996" green="0.37647058820000001" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="b7P-XX-iYK" secondAttribute="trailing" constant="10" id="2KA-wK-Hka"/>
+                                                <constraint firstAttribute="trailing" secondItem="b7P-XX-iYK" secondAttribute="trailing" constant="50" id="2KA-wK-Hka"/>
+                                                <constraint firstAttribute="trailing" secondItem="3DW-Dt-K6N" secondAttribute="trailing" constant="5" id="4DV-Cc-x00"/>
+                                                <constraint firstItem="3DW-Dt-K6N" firstAttribute="centerY" secondItem="Z9v-o2-a5v" secondAttribute="centerY" id="79I-Ac-BSP"/>
                                                 <constraint firstItem="b7P-XX-iYK" firstAttribute="leading" secondItem="Z9v-o2-a5v" secondAttribute="leading" constant="10" id="ig0-OS-wEb"/>
                                                 <constraint firstItem="b7P-XX-iYK" firstAttribute="centerY" secondItem="Z9v-o2-a5v" secondAttribute="centerY" id="muN-wl-pMy"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="_labelMessage" destination="b7P-XX-iYK" id="CEd-LC-dHb"/>
+                                            <outlet property="_lableMessageStatus" destination="3DW-Dt-K6N" id="Wm1-Hj-X8H"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -530,7 +539,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bot-ro-la6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3682" y="754"/>
+            <point key="canvasLocation" x="3680.8000000000002" y="753.37331334332839"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fkd-0J-z1w">
