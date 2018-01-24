@@ -1,14 +1,14 @@
 //
-//  IWLoginModel.m
+//  IWDLoginModel.m
 //  Dino
 //
 //  Created by Devin Zhang on 18/12/2017.
 //  Copyright © 2017 Ideawise Ltd. All rights reserved.
 //
 
-#import "IWLoginModel.h"
+#import "IWDLoginModel.h"
 
-@implementation IWAttachment
+@implementation IWDAttachment
 
 - (instancetype)initWithToken:(NSString *)token {
     if (self = [super init]) {
@@ -25,13 +25,13 @@
 
 @end
 
-@implementation IWActorModel
+@implementation IWDActorModel
 
 - (instancetype)initWithUserId:(NSString *)userId displayName:(NSString *)displayName token:(NSString *)token {
     if (self = [super init]) {
         _uid = userId;
         _displayName = [[displayName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
-        IWAttachment *attachment = [[IWAttachment alloc] initWithToken:token];
+        IWDAttachment *attachment = [[IWDAttachment alloc] initWithToken:token];
         _attachments = [NSMutableArray arrayWithObject:attachment];
     }
     return self;
@@ -50,12 +50,12 @@
 
 @end
 
-@implementation IWLoginModel
+@implementation IWDLoginModel
 
 - (instancetype)initWithToken:(NSString *)token userId:(NSString *)userId displayName:(NSString *)displayName {
     if (self = [super init]) {
         _verb = @"login";
-        _actor = [[IWActorModel alloc] initWithUserId:userId displayName:displayName token:token];
+        _actor = [[IWDActorModel alloc] initWithUserId:userId displayName:displayName token:token];
     }
     return self;
 }

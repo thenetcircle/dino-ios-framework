@@ -1,15 +1,15 @@
 //
-//  IWMessageModel.m
+//  IWDMessageModel.m
 //  Dino
 //
 //  Created by Devin Zhang on 18/01/2018.
 //  Copyright © 2018 Ideawise Ltd. All rights reserved.
 //
 
-#import "IWMessageModel.h"
-#import "IWDinoUserModel.h"
+#import "IWDMessageModel.h"
+#import "IWDUserModel.h"
 
-@implementation IWMessageModel
+@implementation IWDMessageModel
 
 - (instancetype)initWithDinoResponse:(NSDictionary *)dic {
     if (self = [super init]) {
@@ -24,7 +24,7 @@
         if (dic[@"actor"]) {
             NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:dic[@"actor"][@"displayName"] options:0];
             NSString *displayName = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
-            _sender = [[IWDinoUserModel alloc] initWithUid:dic[@"actor"][@"id"] token:nil displayName:displayName];
+            _sender = [[IWDUserModel alloc] initWithUid:dic[@"actor"][@"id"] token:nil displayName:displayName];
         }
     }
     

@@ -1,14 +1,14 @@
 //
-//  IWRoomModel.m
+//  IWDRoomModel.m
 //  Dino
 //
 //  Created by Devin Zhang on 18/01/2018.
 //  Copyright © 2018 Ideawise Ltd. All rights reserved.
 //
 
-#import "IWRoomModel.h"
+#import "IWDRoomModel.h"
 
-@implementation IWRoomModel
+@implementation IWDRoomModel
 - (instancetype)initWithDinoResponse:(NSDictionary *)dic {
     
     _uid = dic[@"id"];

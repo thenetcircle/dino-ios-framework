@@ -7,7 +7,7 @@
 //
 
 #import "IWChatViewController.h"
-#import "IWDinoUserModel.h"
+#import "IWDUserModel.h"
 #define IWChatListTableCellIndentifier @"IWChatListTableCellIndentifier"
 
 @interface IWChatListTableCell() {
@@ -18,7 +18,7 @@
 @end
 
 @implementation IWChatListTableCell
-- (void)applyMessage:(IWMessageModel *)message {
+- (void)applyMessage:(IWDMessageModel *)message {
     if ([self isSentByMyself:message]) {
         _labelMessage.textAlignment = NSTextAlignmentRight;
     }else {
@@ -29,7 +29,7 @@
     _labelMessage.text = message.content;
 }
 
-- (BOOL)isSentByMyself:(IWMessageModel *)message {
+- (BOOL)isSentByMyself:(IWDMessageModel *)message {
     if ([message.sender isEqual:[IWCoreService sharedInstance].currentUser]) {
         return YES;
     }
@@ -63,7 +63,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error {
+- (void)didReceiveMessages:(NSArray<IWDMessageModel *> *)messages error:(IWDError *)error {
     if (error) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                        message:error.domain
@@ -74,7 +74,7 @@
         return;
     }
     NSMutableArray *messagesFromOthersForCurrentRoom = [@[] mutableCopy];
-    for (IWMessageModel *message in messages) {
+    for (IWDMessageModel *message in messages) {
         if (![message.roomId isEqualToString:self.room.uid] || [message.sender.uid isEqualToString:[IWCoreService sharedInstance].currentUser.uid]) {
             continue;
         }
@@ -88,12 +88,12 @@
     [self addMessages:messagesFromOthersForCurrentRoom];
 }
 
-- (void)didMessagesDelivered:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error {
+- (void)didMessagesDelivered:(NSArray<IWDMessageModel *> *)messages error:(IWDError *)error {
     if (error) {
         return;
     }
-    for (IWMessageModel *msg in self.messageArray) {
-        for (IWMessageModel *message in messages) {
+    for (IWDMessageModel *msg in self.messageArray) {
+        for (IWDMessageModel *message in messages) {
             if ([msg.uid isEqualToString:message.uid]) {
                 msg.status = @(IWDMessageStatusDelivered);
                 [self updateMessageStatus:msg];
@@ -102,12 +102,12 @@
     }
 }
 
-- (void)didMessagesRead:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error {
+- (void)didMessagesRead:(NSArray<IWDMessageModel *> *)messages error:(IWDError *)error {
     if (error) {
         return;
     }
-    for (IWMessageModel *msg in self.messageArray) {
-        for (IWMessageModel *message in messages) {
+    for (IWDMessageModel *msg in self.messageArray) {
+        for (IWDMessageModel *message in messages) {
             if ([msg.uid isEqualToString:message.uid]) {
                 msg.status = @(IWDMessageStatusRead);
                 [self updateMessageStatus:msg];
@@ -116,7 +116,7 @@
     }
 }
 
-- (void)updateMessageStatus:(IWMessageModel *)message {
+- (void)updateMessageStatus:(IWDMessageModel *)message {
     NSInteger row = [self.messageArray indexOfObject:message];
     IWChatListTableCell *cell = [_tableView cellForRowAtIndexPath: [NSIndexPath indexPathForRow:row inSection:0]];
     [cell applyMessage:message];
@@ -125,7 +125,7 @@
 
 - (IBAction)send:(UIButton *)button {
     NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  button send  <<<<<<<<<<<<<<<<<<<<<<<<<");
-    [[IWCoreService sharedInstance].dinoService sendMessageWithRoomId:self.room.uid objectType:@"private" message:_labelMessage.text completion:^(IWMessageModel *message, IWDError *error) {
+    [[IWCoreService sharedInstance].dinoService sendMessageWithRoomId:self.room.uid objectType:@"private" message:_labelMessage.text completion:^(IWDMessageModel *message, IWDError *error) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message  <<<<<<<<<<<<<<<<<<<<<<<<<");
         if (!error) {
             message.sender = [IWCoreService sharedInstance].currentUser;
@@ -150,7 +150,7 @@
     }
 }
 
-- (void)addMessages:(NSArray<IWMessageModel *> *)messages {
+- (void)addMessages:(NSArray<IWDMessageModel *> *)messages {
     NSMutableArray *indexPaths = [@[] mutableCopy];
     for (int i = 0; i < messages.count; i++) {
         NSIndexPath *path = [NSIndexPath indexPathForRow:self.messageArray.count + i inSection:0];
@@ -173,7 +173,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    IWMessageModel *message = self.messageArray[indexPath.row];
+    IWDMessageModel *message = self.messageArray[indexPath.row];
     IWChatListTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IWChatListTableCellIdentifier"];
     [cell applyMessage:message];
     return cell;
@@ -184,7 +184,7 @@
 }
 
 #pragma  mark - getter / setter
-- (void)setRoom:(IWRoomModel *)room {
+- (void)setRoom:(IWDRoomModel *)room {
     if (_room != room) {
         _room = room;
         [[IWDinoService sharedInstance] joinRoom:self.room.uid];

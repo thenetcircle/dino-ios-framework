@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IWRoomModel.h"
-#import "IWChannelModel.h"
+#import "IWDRoomModel.h"
+#import "IWDChannelModel.h"
 #import "IWCoreService.h"
 @interface IWRoomListTableCell: UITableViewCell
-- (void)applyRoom:(IWRoomModel *)room;
+- (void)applyRoom:(IWDRoomModel *)room;
 @end
 
 @interface IWRoomListTableViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) IWChannelModel *channel;
+@property (nonatomic, strong) IWDChannelModel *channel;
 @property (nonatomic, strong) NSMutableArray *roomArray;
 @end

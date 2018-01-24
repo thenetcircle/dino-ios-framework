@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IWDinoUserModel : NSObject
+@interface IWDUserModel : NSObject
 
 @property (nonatomic, copy) NSString *uid;
 @property (nonatomic, copy) NSString *displayName;

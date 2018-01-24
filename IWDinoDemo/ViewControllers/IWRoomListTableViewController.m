@@ -9,7 +9,7 @@
 #import "IWRoomListTableViewController.h"
 #import "IWChatViewController.h"
 #import "IWRoomCreateView.h"
-#import "IWDinoUserModel.h"
+#import "IWDUserModel.h"
 
 #define IWRoomListTableCellIdentifier @"IWRoomListTableCellIdentifier"
 
@@ -19,7 +19,7 @@
 @end
 
 @implementation IWRoomListTableCell
-- (void)applyRoom:(IWRoomModel *)room {
+- (void)applyRoom:(IWDRoomModel *)room {
     _labelRoomName.text = room.displayName;
 }
 @end
@@ -46,7 +46,7 @@
                                                             userId:[IWCoreService sharedInstance].currentUser.uid
                                                         userId2:targetUserId
                                                        roomName:roomName
-                                                     completion:^(IWRoomModel *room, IWDError *error) {
+                                                     completion:^(IWDRoomModel *room, IWDError *error) {
                                                          if (!error) {
                                                              
                                                              NSIndexPath *index = [NSIndexPath indexPathForRow:self.roomArray.count inSection:0];
@@ -96,7 +96,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    IWRoomModel *room = self.roomArray[indexPath.row];
+    IWDRoomModel *room = self.roomArray[indexPath.row];
     [self performSegueWithIdentifier:@"IWChatViewControllerSegue" sender:room];
 }
 
@@ -105,7 +105,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    IWRoomModel *room = self.roomArray[indexPath.row];
+    IWDRoomModel *room = self.roomArray[indexPath.row];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [[IWDinoService sharedInstance] removeRoom:room.uid completion:^(IWDError *error) {
             if (!error) {

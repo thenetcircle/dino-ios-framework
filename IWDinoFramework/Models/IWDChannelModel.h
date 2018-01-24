@@ -1,5 +1,5 @@
 //
-//  IWRoomModel.h
+//  IWDChannelModel.h
 //  Dino
 //
 //  Created by Devin Zhang on 18/01/2018.
@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IWRoomModel : NSObject
+@interface IWDChannelModel : NSObject
+
 @property (nonatomic, copy) NSString *uid;
 @property (nonatomic, copy) NSString *displayName;
 
 - (instancetype)initWithDinoResponse:(NSDictionary *)dic;
+
 @end

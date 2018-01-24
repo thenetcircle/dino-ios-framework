@@ -8,7 +8,7 @@
 
 #import "IWCoreService.h"
 #import "IWDinoService.h"
-#import "IWDinoUserModel.h"
+#import "IWDUserModel.h"
 
 @interface IWCoreService()
 

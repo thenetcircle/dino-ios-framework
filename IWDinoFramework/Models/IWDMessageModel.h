@@ -1,5 +1,5 @@
 //
-//  IWMessageModel.h
+//  IWDMessageModel.h
 //  Dino
 //
 //  Created by Devin Zhang on 18/01/2018.
@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-@class IWDinoUserModel;
-@class IWRoomModel;
+@class IWDUserModel;
+@class IWDRoomModel;
 
 typedef NS_ENUM(NSInteger, IWDMessageStatus) {
     IWDMessageStatusUnknown = 0,
@@ -18,13 +18,13 @@ typedef NS_ENUM(NSInteger, IWDMessageStatus) {
     IWDMessageStatusRead
 };
 
-@interface IWMessageModel : NSObject
+@interface IWDMessageModel : NSObject
 @property (nonatomic, copy)     NSString        *uid;
 @property (nonatomic, copy)     NSString        *content;
 @property (nonatomic, copy)     NSString        *roomId;
 @property (nonatomic, strong)   NSNumber        *status;
 @property (nonatomic, readonly)   NSString        *displayStatus;
-@property (nonatomic, strong)   IWDinoUserModel *sender;
+@property (nonatomic, strong)   IWDUserModel *sender;
 
 - (instancetype)initWithDic:(NSDictionary *)dic;
 - (instancetype)initWithDinoResponse:(NSDictionary *)dic;

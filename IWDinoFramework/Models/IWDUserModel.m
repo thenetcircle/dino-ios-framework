@@ -6,9 +6,9 @@
 //  Copyright © 2018 Ideawise Ltd. All rights reserved.
 //
 
-#import "IWDinoUserModel.h"
+#import "IWDUserModel.h"
 
-@implementation IWDinoUserModel
+@implementation IWDUserModel
 - (instancetype)initWithUid:(NSString *)uid token:(NSString *)token displayName:(NSString *)displayName {
     if (self = [super init]) {
         _uid = uid;
@@ -31,7 +31,7 @@
     if ([object class] != [self class]) {
         return NO;
     }
-    if ([((IWDinoUserModel *)object).uid isEqualToString:_uid]) {
+    if ([((IWDUserModel *)object).uid isEqualToString:_uid]) {
         return YES;
     }
     return NO;

@@ -21,12 +21,12 @@
 		033D85A71FDFA1F400113EDE /* DinoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D85A61FDFA1F400113EDE /* DinoTests.m */; };
 		035F38F02015B940000B51EC /* IWRoomCreateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 035F38EF2015B940000B51EC /* IWRoomCreateView.xib */; };
 		035F38F32015B962000B51EC /* IWRoomCreateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38F22015B962000B51EC /* IWRoomCreateView.m */; };
-		035F390320182DCC000B51EC /* IWDinoUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38FB20182DCC000B51EC /* IWDinoUserModel.m */; };
-		035F390420182DCC000B51EC /* IWLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38FD20182DCC000B51EC /* IWLoginModel.m */; };
-		035F390520182DCD000B51EC /* IWMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38FF20182DCC000B51EC /* IWMessageModel.m */; };
-		035F390620182DCD000B51EC /* IWRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F390120182DCC000B51EC /* IWRoomModel.m */; };
+		035F390320182DCC000B51EC /* IWDUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38FB20182DCC000B51EC /* IWDUserModel.m */; };
+		035F390420182DCC000B51EC /* IWDLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38FD20182DCC000B51EC /* IWDLoginModel.m */; };
+		035F390520182DCD000B51EC /* IWDMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F38FF20182DCC000B51EC /* IWDMessageModel.m */; };
+		035F390620182DCD000B51EC /* IWDRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F390120182DCC000B51EC /* IWDRoomModel.m */; };
 		035F390920182DEB000B51EC /* IWDinoService.m in Sources */ = {isa = PBXBuildFile; fileRef = 035F390720182DEA000B51EC /* IWDinoService.m */; };
-		03BFDB092018376D001C1E0E /* IWChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BFDB072018376D001C1E0E /* IWChannelModel.m */; };
+		03BFDB092018376D001C1E0E /* IWDChannelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BFDB072018376D001C1E0E /* IWDChannelModel.m */; };
 		03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */; };
 		8C8C5CEBABF829D6F79346AF /* Pods_Dino.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11A104369C9E18C2BCFAAB82 /* Pods_Dino.framework */; };
 		EA5EC293F26576A93E208A32 /* Pods_DinoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A892990C78FDC81DBC5C2C7B /* Pods_DinoTests.framework */; };
@@ -69,18 +69,18 @@
 		035F38EF2015B940000B51EC /* IWRoomCreateView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IWRoomCreateView.xib; sourceTree = "<group>"; };
 		035F38F12015B962000B51EC /* IWRoomCreateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IWRoomCreateView.h; sourceTree = "<group>"; };
 		035F38F22015B962000B51EC /* IWRoomCreateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IWRoomCreateView.m; sourceTree = "<group>"; };
-		035F38FA20182DCC000B51EC /* IWDinoUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWDinoUserModel.h; sourceTree = "<group>"; };
-		035F38FB20182DCC000B51EC /* IWDinoUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWDinoUserModel.m; sourceTree = "<group>"; };
-		035F38FC20182DCC000B51EC /* IWLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWLoginModel.h; sourceTree = "<group>"; };
-		035F38FD20182DCC000B51EC /* IWLoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWLoginModel.m; sourceTree = "<group>"; };
-		035F38FE20182DCC000B51EC /* IWMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWMessageModel.h; sourceTree = "<group>"; };
-		035F38FF20182DCC000B51EC /* IWMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWMessageModel.m; sourceTree = "<group>"; };
-		035F390020182DCC000B51EC /* IWRoomModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWRoomModel.h; sourceTree = "<group>"; };
-		035F390120182DCC000B51EC /* IWRoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWRoomModel.m; sourceTree = "<group>"; };
+		035F38FA20182DCC000B51EC /* IWDUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWDUserModel.h; sourceTree = "<group>"; };
+		035F38FB20182DCC000B51EC /* IWDUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWDUserModel.m; sourceTree = "<group>"; };
+		035F38FC20182DCC000B51EC /* IWDLoginModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWDLoginModel.h; sourceTree = "<group>"; };
+		035F38FD20182DCC000B51EC /* IWDLoginModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWDLoginModel.m; sourceTree = "<group>"; };
+		035F38FE20182DCC000B51EC /* IWDMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWDMessageModel.h; sourceTree = "<group>"; };
+		035F38FF20182DCC000B51EC /* IWDMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWDMessageModel.m; sourceTree = "<group>"; };
+		035F390020182DCC000B51EC /* IWDRoomModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWDRoomModel.h; sourceTree = "<group>"; };
+		035F390120182DCC000B51EC /* IWDRoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWDRoomModel.m; sourceTree = "<group>"; };
 		035F390720182DEA000B51EC /* IWDinoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IWDinoService.m; path = ../../IWDinoFramework/IWDinoService.m; sourceTree = "<group>"; };
 		035F390820182DEA000B51EC /* IWDinoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IWDinoService.h; path = ../../IWDinoFramework/IWDinoService.h; sourceTree = "<group>"; };
-		03BFDB072018376D001C1E0E /* IWChannelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWChannelModel.m; sourceTree = "<group>"; };
-		03BFDB082018376D001C1E0E /* IWChannelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWChannelModel.h; sourceTree = "<group>"; };
+		03BFDB072018376D001C1E0E /* IWDChannelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWDChannelModel.m; sourceTree = "<group>"; };
+		03BFDB082018376D001C1E0E /* IWDChannelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWDChannelModel.h; sourceTree = "<group>"; };
 		03DD67301FE7C6A800F8DACD /* NSObject+IWJSONTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+IWJSONTool.h"; sourceTree = "<group>"; };
 		03DD67311FE7C6A800F8DACD /* NSObject+IWJSONTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IWJSONTool.m"; sourceTree = "<group>"; };
 		11A104369C9E18C2BCFAAB82 /* Pods_Dino.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dino.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,16 +193,16 @@
 		035F38F720182DCC000B51EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				03BFDB082018376D001C1E0E /* IWChannelModel.h */,
-				03BFDB072018376D001C1E0E /* IWChannelModel.m */,
-				035F38FA20182DCC000B51EC /* IWDinoUserModel.h */,
-				035F38FB20182DCC000B51EC /* IWDinoUserModel.m */,
-				035F38FC20182DCC000B51EC /* IWLoginModel.h */,
-				035F38FD20182DCC000B51EC /* IWLoginModel.m */,
-				035F38FE20182DCC000B51EC /* IWMessageModel.h */,
-				035F38FF20182DCC000B51EC /* IWMessageModel.m */,
-				035F390020182DCC000B51EC /* IWRoomModel.h */,
-				035F390120182DCC000B51EC /* IWRoomModel.m */,
+				03BFDB082018376D001C1E0E /* IWDChannelModel.h */,
+				03BFDB072018376D001C1E0E /* IWDChannelModel.m */,
+				035F38FA20182DCC000B51EC /* IWDUserModel.h */,
+				035F38FB20182DCC000B51EC /* IWDUserModel.m */,
+				035F38FC20182DCC000B51EC /* IWDLoginModel.h */,
+				035F38FD20182DCC000B51EC /* IWDLoginModel.m */,
+				035F38FE20182DCC000B51EC /* IWDMessageModel.h */,
+				035F38FF20182DCC000B51EC /* IWDMessageModel.m */,
+				035F390020182DCC000B51EC /* IWDRoomModel.h */,
+				035F390120182DCC000B51EC /* IWDRoomModel.m */,
 			);
 			name = Models;
 			path = ../../IWDinoFramework/Models;
@@ -450,13 +450,13 @@
 				03DD67321FE7C6A800F8DACD /* NSObject+IWJSONTool.m in Sources */,
 				035F38F32015B962000B51EC /* IWRoomCreateView.m in Sources */,
 				0338790320107E8A00F673B4 /* IWLoginViewViewController.m in Sources */,
-				03BFDB092018376D001C1E0E /* IWChannelModel.m in Sources */,
+				03BFDB092018376D001C1E0E /* IWDChannelModel.m in Sources */,
 				0338790F2010A4FD00F673B4 /* IWChatViewController.m in Sources */,
-				035F390520182DCD000B51EC /* IWMessageModel.m in Sources */,
+				035F390520182DCD000B51EC /* IWDMessageModel.m in Sources */,
 				03387906201080E200F673B4 /* IWChannelListTableViewController.m in Sources */,
-				035F390420182DCC000B51EC /* IWLoginModel.m in Sources */,
-				035F390620182DCD000B51EC /* IWRoomModel.m in Sources */,
-				035F390320182DCC000B51EC /* IWDinoUserModel.m in Sources */,
+				035F390420182DCC000B51EC /* IWDLoginModel.m in Sources */,
+				035F390620182DCD000B51EC /* IWDRoomModel.m in Sources */,
+				035F390320182DCC000B51EC /* IWDUserModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

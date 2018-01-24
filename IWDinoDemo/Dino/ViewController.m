@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "NSObject+IWJSONTool.h"
 #import "IWDinoService.h"
-#import "IWLoginModel.h"
+#import "IWDLoginModel.h"
 @import SocketIO;
 
 @interface ViewController ()
@@ -46,7 +46,7 @@
 
 - (IBAction)userLogin:(UIButton *)button {
     
-    IWLoginModel *model = [[IWLoginModel alloc] initWithToken:_userTokenField.text userId:_userIdField.text displayName:@"cool"];
+    IWDLoginModel *model = [[IWDLoginModel alloc] initWithToken:_userTokenField.text userId:_userIdField.text displayName:@"cool"];
     [self.socketService loginWithLoginModel:model];
     
 }
@@ -73,7 +73,7 @@
     [self.socketService sendMessageWithRoomId:_roomIdForMessageField.text
                                    objectType:@"private"
                                       message:_messageField.text
-                                   completion:^(IWMessageModel *message, IWDError *error) {
+                                   completion:^(IWDMessageModel *message, IWDError *error) {
         if (!error) {
 
         }

@@ -20,10 +20,10 @@ return __singleton__; \
 
 #import <Foundation/Foundation.h>
 @class IWDinoService;
-@class IWDinoUserModel;
+@class IWDUserModel;
 
 @interface IWCoreService : NSObject
 @property (nonatomic, strong) IWDinoService *dinoService;
-@property (nonatomic, strong) IWDinoUserModel *currentUser;
+@property (nonatomic, strong) IWDUserModel *currentUser;
 AS_SINGLETON;
 @end

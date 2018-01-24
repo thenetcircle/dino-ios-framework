@@ -1,5 +1,5 @@
 //
-//  IWLoginModel.h
+//  IWDLoginModel.h
 //  Dino
 //
 //  Created by Devin Zhang on 18/12/2017.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IWAttachment : NSObject
+@interface IWDAttachment : NSObject
 @property (nonatomic, strong) NSString *objectType;
 @property (nonatomic, strong) NSString *content;
 
@@ -16,19 +16,19 @@
 @end
 
 
-@interface IWActorModel : NSObject
+@interface IWDActorModel : NSObject
 
 @property (nonatomic, strong) NSString *uid;
 @property (nonatomic, strong) NSString *displayName;
-@property (nonatomic, strong) NSMutableArray<IWAttachment *> *attachments;
+@property (nonatomic, strong) NSMutableArray<IWDAttachment *> *attachments;
 
 - (NSDictionary *)dictionary;
 @end
 
-@interface IWLoginModel : NSObject
+@interface IWDLoginModel : NSObject
 
 @property (nonatomic, strong) NSString *verb;
-@property (nonatomic, strong) IWActorModel *actor;
+@property (nonatomic, strong) IWDActorModel *actor;
 
 - (instancetype)initWithToken:(NSString *)token userId:(NSString *)userId displayName:(NSString *)displayName;
 - (NSDictionary *)dictionary;

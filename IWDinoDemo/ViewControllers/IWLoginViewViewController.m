@@ -9,8 +9,8 @@
 #import "IWLoginViewViewController.h"
 #import "IWDinoService.h"
 #import "IWChannelListTableViewController.h"
-#import "IWLoginModel.h"
-#import "IWDinoUserModel.h"
+#import "IWDLoginModel.h"
+#import "IWDUserModel.h"
 #import "IWCoreService.h"
 @interface IWLoginViewViewController ()<IWDinoServiceDelegate>
 {
@@ -41,7 +41,7 @@
 - (void)didLogin:(IWDError *)error {
     if (!error) {
         
-        IWDinoUserModel *user = [[IWDinoUserModel alloc] initWithUid:_fieldUserID.text
+        IWDUserModel *user = [[IWDUserModel alloc] initWithUid:_fieldUserID.text
                                                                token:_fieldToken.text
                                                          displayName:_fieldDisplayName.text];
         [IWCoreService sharedInstance].currentUser = user;
@@ -73,7 +73,7 @@
 
 - (IBAction)login:(UIButton *)button {
     
-    IWLoginModel *model = [[IWLoginModel alloc] initWithToken:_fieldToken.text userId:_fieldUserID.text displayName:_fieldDisplayName.text];
+    IWDLoginModel *model = [[IWDLoginModel alloc] initWithToken:_fieldToken.text userId:_fieldUserID.text displayName:_fieldDisplayName.text];
     [[IWDinoService sharedInstance] loginWithLoginModel:model];
 }
 

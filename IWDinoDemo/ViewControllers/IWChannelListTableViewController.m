@@ -16,11 +16,11 @@
 @end
 
 @interface IWChannelListTableViewController()<IWDinoServiceDelegate>
-@property (nonatomic, strong) IWChannelModel *selectChannel;
+@property (nonatomic, strong) IWDChannelModel *selectChannel;
 @end
 
 @implementation IWChannelListTableCell
-- (void)applyChannelName:(IWChannelModel *)channel {
+- (void)applyChannelName:(IWDChannelModel *)channel {
     _labelChannelName.text = channel.displayName;
 }
 @end
@@ -79,7 +79,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    IWChannelModel *channel = self.channelArray[indexPath.row];
+    IWDChannelModel *channel = self.channelArray[indexPath.row];
     self.selectChannel = channel;
     [[IWDinoService sharedInstance] listRoomsWithChannelId:channel.uid];
 }

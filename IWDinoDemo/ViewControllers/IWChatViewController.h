@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "IWMessageModel.h"
+#import "IWDMessageModel.h"
 #import "IWDinoService.h"
-#import "IWRoomModel.h"
+#import "IWDRoomModel.h"
 #import "IWCoreService.h"
 
 @interface IWChatListTableCell: UITableViewCell<IWDinoServiceDelegate>
-- (void)applyMessage:(IWMessageModel *)message;
+- (void)applyMessage:(IWDMessageModel *)message;
 @end
 
 @interface IWChatViewController : UIViewController
-@property (nonatomic, strong) IWRoomModel *room;
+@property (nonatomic, strong) IWDRoomModel *room;
 @end

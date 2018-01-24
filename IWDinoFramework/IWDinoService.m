@@ -15,7 +15,7 @@
 @interface IWDinoService ()
 @property (nonatomic, strong) SocketManager     *socketManager;
 @property (nonatomic, strong) SocketIOClient    *socketClient;
-@property (nonatomic, strong) IWLoginModel      *loginModel;
+@property (nonatomic, strong) IWDLoginModel      *loginModel;
 @property (nonatomic, strong) NSDateFormatter   *rcfDateFormatter;
 
 @property (nonatomic, strong) NSMutableArray    *delegates;
@@ -87,7 +87,7 @@
         }
         NSMutableArray *messages = [@[] mutableCopy];
         for (NSDictionary *dic in data[0][@"object"][@"attachments"]) {
-            IWMessageModel *message = [[IWMessageModel alloc] initWithDic:dic];
+            IWDMessageModel *message = [[IWDMessageModel alloc] initWithDic:dic];
             [messages addObject:message];
         }
         for (id delegate in self.delegates) {
@@ -108,7 +108,7 @@
         }
         NSMutableArray *messages = [@[] mutableCopy];
         for (NSDictionary *dic in data[0][@"object"][@"attachments"]) {
-            IWMessageModel *message = [[IWMessageModel alloc] initWithDic:dic];
+            IWDMessageModel *message = [[IWDMessageModel alloc] initWithDic:dic];
             [messages addObject:message];
         }
         for (id delegate in self.delegates) {
@@ -127,7 +127,7 @@
                     [delegate didReceiveMessages:[NSArray array] error:error];
                     return;
                 }
-                IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0]];
+                IWDMessageModel *message = [[IWDMessageModel alloc] initWithDinoResponse:data[0]];
                 NSString *roomId = data[0][@"target"][@"id"];
                 message.roomId = roomId;
                 [delegate didReceiveMessages:@[message] error:nil];
@@ -137,7 +137,7 @@
 }
 
 
-- (void)loginWithLoginModel:(IWLoginModel *)loginModel {
+- (void)loginWithLoginModel:(IWDLoginModel *)loginModel {
     [self.socketClient on:@"gn_login" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_login  <<<<<<<<<<<<<<<<<<<<<<<<<");
         IWDError *error = [self errorFromResponse:data];
@@ -170,7 +170,7 @@
         NSArray *channelArray = data[0][@"data"][@"object"][@"attachments"];
         NSMutableArray *channels = [@[] mutableCopy];
         for (NSDictionary *dic in channelArray) {
-            IWChannelModel *channel = [[IWChannelModel alloc] initWithDinoResponse:dic];
+            IWDChannelModel *channel = [[IWDChannelModel alloc] initWithDinoResponse:dic];
             [channels addObject:channel];
         }
         
@@ -203,7 +203,7 @@
         NSArray *roomArray = data[0][@"data"][@"object"][@"attachments"];
         NSMutableArray *rooms = [@[] mutableCopy];
         for (NSDictionary *dic in roomArray) {
-            IWRoomModel *room = [[IWRoomModel alloc] initWithDinoResponse:dic];
+            IWDRoomModel *room = [[IWDRoomModel alloc] initWithDinoResponse:dic];
             [rooms addObject:room];
         }
         
@@ -221,7 +221,7 @@
 - (void)sendMessageWithRoomId:(NSString *)roomId
                    objectType:(NSString *)objectType
                       message:(NSString *)message
-                   completion:(void (^)(IWMessageModel *message, IWDError *error))completion {
+                   completion:(void (^)(IWDMessageModel *message, IWDError *error))completion {
     NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  send_message  <<<<<<<<<<<<<<<<<<<<<<<<<");
     NSString *base64Message = [[message dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
     
@@ -231,7 +231,7 @@
             if(error){
                 completion(nil, error);
             }else {
-                IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0][@"data"]];
+                IWDMessageModel *message = [[IWDMessageModel alloc] initWithDinoResponse:data[0][@"data"]];
                 completion(message, nil);
             }
         }
@@ -253,7 +253,7 @@
         IWDError *error = [self errorFromResponse:data];
         if (completion) {
             if (!error) {
-                IWRoomModel *room = [[IWRoomModel alloc] initWithDinoResponse:data[0][@"data"][@"target"]];
+                IWDRoomModel *room = [[IWDRoomModel alloc] initWithDinoResponse:data[0][@"data"][@"target"]];
                 completion(room, nil);
             }else {
                 completion(nil, error);
@@ -313,20 +313,20 @@
     [self.socketClient emit:@"history" with:@[@{@"verb":@"list", @"updated":updateTime ,@"target":@{@"id":roomId, @"objectType":@"private"}}]];
 }
 
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages {
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWDMessageModel *> *)messages {
     
     NSMutableArray *messageArray = [@[] mutableCopy];
-    for (IWMessageModel *message in messages) {
+    for (IWDMessageModel *message in messages) {
         [messageArray addObject:@{@"id" : message.uid}];
     }
     NSDictionary *emitObject = @{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}};
     [self.socketClient emit:@"received" with: @[emitObject]];
 }
 
-- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages {
+- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWDMessageModel *> *)messages {
 
     NSMutableArray *messageArray = [@[] mutableCopy];
-    for (IWMessageModel *message in messages) {
+    for (IWDMessageModel *message in messages) {
         [messageArray addObject:@{@"id" : message.uid}];
     }
     NSDictionary *emitObject = @{@"verb" : @"read", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}};
