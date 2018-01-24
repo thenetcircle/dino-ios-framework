@@ -7,11 +7,6 @@
 //
 
 #import "IWDinoService.h"
-#import "IWLoginModel.h"
-#import "IWChannelModel.h"
-#import "IWRoomModel.h"
-#import "IWMessageModel.h"
-
 @import SocketIO;
 
 #define IW_DINO_SERVICE_ADDRESS @"http://10.60.1.124:9210/ws"
