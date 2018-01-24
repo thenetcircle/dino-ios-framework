@@ -10,6 +10,8 @@
 #import "IWMessageModel.h"
 #import "IWDinoService.h"
 #import "IWRoomModel.h"
+#import "IWCoreService.h"
+
 @interface IWChatListTableCell: UITableViewCell<IWDinoServiceDelegate>
 - (void)applyMessage:(IWMessageModel *)message;
 @end

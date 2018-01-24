@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IWCoreService.h"
-@class IWLoginModel;
-@class IWChannelModel;
-@class IWRoomModel;
-@class IWMessageModel;
+#import "IWLoginModel.h"
+#import "IWChannelModel.h"
+#import "IWRoomModel.h"
+#import "IWMessageModel.h"
 
 @interface IWDError : NSError
 @end
@@ -22,8 +21,8 @@
 - (void)didReceiveChannels:(NSArray<IWChannelModel *> *)channels error:(IWDError *)error;
 - (void)didReceiveRooms:(NSArray<IWRoomModel *> *)rooms error:(IWDError *)error;
 - (void)didReceiveMessages:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error;
-- (void)didMessageDelivered:(IWMessageModel *)message error:(IWDError *)error;
-- (void)didMessageRead:(IWMessageModel *)message error:(IWDError *)error;
+- (void)didMessagesDelivered:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error;
+- (void)didMessagesRead:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error;
 - (void)didLogin:(IWDError *)error;
 - (void)didJoin:(IWDError *)error;
 @end
@@ -31,8 +30,8 @@
 typedef void (^IWDBlock)(IWDError *error);
 typedef void (^IWDRoomCreateBlock)(IWRoomModel *room, IWDError *error);
 @interface IWDinoService : NSObject
-AS_SINGLETON;
 
++ (instancetype)sharedInstance;
 - (void)addDelegate:(id)delegate;
 - (void)removeDelegate:(id)delegate;
 - (void)removeAllDelegates;

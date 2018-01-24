@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "IWChannelModel.h"
+#import "IWCoreService.h"
 @interface IWChannelListTableCell: UITableViewCell
 - (void)applyChannelName:(IWChannelModel *)channel;
 @end

@@ -80,34 +80,48 @@
         }
         [messagesFromOthersForCurrentRoom addObject:message];
     }
-    [[IWDinoService sharedInstance] sentAckReceived:self.room.uid messages:messagesFromOthersForCurrentRoom];
+    if (messagesFromOthersForCurrentRoom.count == 0) {
+        return;
+    }
     [[IWDinoService sharedInstance] sentAckRead:self.room.uid messages:messagesFromOthersForCurrentRoom];
+//    [[IWDinoService sharedInstance] sentAckReceived:self.room.uid messages:messagesFromOthersForCurrentRoom];
     [self addMessages:messagesFromOthersForCurrentRoom];
 }
 
-- (void)didMessageDelivered:(IWMessageModel *)message error:(IWDError *)error {
+- (void)didMessagesDelivered:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error {
     if (error) {
         return;
     }
     for (IWMessageModel *msg in self.messageArray) {
-        if ([msg.uid isEqualToString:message.uid]) {
-            msg.status = @(IWDMessageStatusDelivered);
-            break;
+        for (IWMessageModel *message in messages) {
+            if ([msg.uid isEqualToString:message.uid]) {
+                msg.status = @(IWDMessageStatusDelivered);
+                [self updateMessageStatus:msg];
+            }
         }
     }
 }
 
-- (void)didMessageRead:(IWMessageModel *)message error:(IWDError *)error {
+- (void)didMessagesRead:(NSArray<IWMessageModel *> *)messages error:(IWDError *)error {
     if (error) {
         return;
     }
     for (IWMessageModel *msg in self.messageArray) {
-        if ([msg.uid isEqualToString:message.uid]) {
-            msg.status = @(IWDMessageStatusRead);
-            break;
+        for (IWMessageModel *message in messages) {
+            if ([msg.uid isEqualToString:message.uid]) {
+                msg.status = @(IWDMessageStatusRead);
+                [self updateMessageStatus:msg];
+            }
         }
     }
 }
+
+- (void)updateMessageStatus:(IWMessageModel *)message {
+    NSInteger row = [self.messageArray indexOfObject:message];
+    IWChatListTableCell *cell = [_tableView cellForRowAtIndexPath: [NSIndexPath indexPathForRow:row inSection:0]];
+    [cell applyMessage:message];
+}
+
 
 - (IBAction)send:(UIButton *)button {
     NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  button send  <<<<<<<<<<<<<<<<<<<<<<<<<");

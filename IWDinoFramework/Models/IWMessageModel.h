@@ -26,6 +26,6 @@ typedef NS_ENUM(NSInteger, IWDMessageStatus) {
 @property (nonatomic, readonly)   NSString        *displayStatus;
 @property (nonatomic, strong)   IWDinoUserModel *sender;
 
-
+- (instancetype)initWithDic:(NSDictionary *)dic;
 - (instancetype)initWithDinoResponse:(NSDictionary *)dic;
 @end

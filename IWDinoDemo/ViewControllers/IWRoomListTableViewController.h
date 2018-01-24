@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "IWRoomModel.h"
 #import "IWChannelModel.h"
+#import "IWCoreService.h"
 @interface IWRoomListTableCell: UITableViewCell
 - (void)applyRoom:(IWRoomModel *)room;
 @end

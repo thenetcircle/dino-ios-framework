@@ -7,7 +7,6 @@
 //
 
 #import "IWDinoService.h"
-#import "NSObject+IWJSONTool.h"
 #import "IWLoginModel.h"
 #import "IWChannelModel.h"
 #import "IWRoomModel.h"
@@ -28,7 +27,13 @@
 @end
 
 @implementation IWDinoService
-DEF_SINGLETON
+
++ (instancetype)sharedInstance {
+    static dispatch_once_t once;
+    static id singleton;
+    dispatch_once( &once, ^{ singleton = [[self alloc] init]; } );
+    return singleton;
+};
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -79,14 +84,20 @@ DEF_SINGLETON
     [self.socketClient on:@"gn_message_received" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message_received  <<<<<<<<<<<<<<<<<<<<<<<<<");
         IWDError *error = [self errorFromResponse:data];
+        if (error) {
+            for (id delegate in self.delegates) {
+                [delegate didMessagesDelivered:@[] error:error];
+            }
+            return;
+        }
+        NSMutableArray *messages = [@[] mutableCopy];
+        for (NSDictionary *dic in data[0][@"object"][@"attachments"]) {
+            IWMessageModel *message = [[IWMessageModel alloc] initWithDic:dic];
+            [messages addObject:message];
+        }
         for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didMessageDelivered:error:)]) {
-                if (error) {
-                    [delegate didMessageDelivered:nil error:error];
-                    return;
-                }
-                IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0]];
-                [delegate didMessageDelivered:message error:nil];
+            if ([delegate respondsToSelector:@selector(didMessagesDelivered: error:)]) {
+                [delegate didMessagesDelivered:messages error:nil];
             }
         }
     }];
@@ -94,14 +105,20 @@ DEF_SINGLETON
     [self.socketClient on:@"gn_message_read" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message_read  <<<<<<<<<<<<<<<<<<<<<<<<<");
         IWDError *error = [self errorFromResponse:data];
+        if (error) {
+            for (id delegate in self.delegates) {
+                [delegate didMessagesRead:@[] error:error];
+            }
+            return;
+        }
+        NSMutableArray *messages = [@[] mutableCopy];
+        for (NSDictionary *dic in data[0][@"object"][@"attachments"]) {
+            IWMessageModel *message = [[IWMessageModel alloc] initWithDic:dic];
+            [messages addObject:message];
+        }
         for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didMessageRead: error:)]) {
-                if (error) {
-                    [delegate didMessageDelivered:nil error:error];
-                    return;
-                }
-                IWMessageModel *message = [[IWMessageModel alloc] initWithDinoResponse:data[0]];
-                [delegate didMessageRead:message error:nil];
+            if ([delegate respondsToSelector:@selector(didMessagesRead: error:)]) {
+                [delegate didMessagesRead:messages error:nil];
             }
         }
     }];
@@ -307,8 +324,8 @@ DEF_SINGLETON
     for (IWMessageModel *message in messages) {
         [messageArray addObject:@{@"id" : message.uid}];
     }
-    
-    [self.socketClient emit:@"received" with: @[@{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}}]];
+    NSDictionary *emitObject = @{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}};
+    [self.socketClient emit:@"received" with: @[emitObject]];
 }
 
 - (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWMessageModel *> *)messages {
@@ -317,8 +334,8 @@ DEF_SINGLETON
     for (IWMessageModel *message in messages) {
         [messageArray addObject:@{@"id" : message.uid}];
     }
-    
-    [self.socketClient emit:@"read" with: @[@{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}}]];
+    NSDictionary *emitObject = @{@"verb" : @"read", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}};
+    [self.socketClient emit:@"read" with: @[emitObject]];
 }
 
 - (IWDError *)errorFromResponse:(NSArray *)data {

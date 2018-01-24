@@ -11,7 +11,7 @@
 #import "IWChannelListTableViewController.h"
 #import "IWLoginModel.h"
 #import "IWDinoUserModel.h"
-
+#import "IWCoreService.h"
 @interface IWLoginViewViewController ()<IWDinoServiceDelegate>
 {
     IBOutlet    UITextField     *_fieldUserID;
