@@ -52,7 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[IWDinoService sharedInstance] addDelegate:self];
+    [IWDinoService sharedInstance].delegate = self;
     _labelMessage.enabled = NO;
     _buttonSend.enabled = NO;
     
@@ -83,8 +83,7 @@
     if (messagesFromOthersForCurrentRoom.count == 0) {
         return;
     }
-    [[IWDinoService sharedInstance] sentAckRead:self.room.uid messages:messagesFromOthersForCurrentRoom];
-//    [[IWDinoService sharedInstance] sentAckReceived:self.room.uid messages:messagesFromOthersForCurrentRoom];
+    [[IWDinoService sharedInstance] sentAckReceived:self.room.uid messages:messagesFromOthersForCurrentRoom];
     [self addMessages:messagesFromOthersForCurrentRoom];
 }
 

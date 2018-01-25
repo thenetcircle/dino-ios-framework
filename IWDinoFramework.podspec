@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "IWDinoFramework"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "A dino framework base on objective c"
 
   # This description is used to generate tags and improve search results.
@@ -133,6 +133,6 @@ Pod::Spec.new do |s|
     s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-    s.dependency "Socket.IO-Client-Swift", "~> 13.1.0"
+    s.dependency "Socket.IO-Client-Swift", "13.0.1"
 
 end

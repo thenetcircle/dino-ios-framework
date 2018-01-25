@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [[IWDinoService sharedInstance] addDelegate:self];
+    [IWDinoService sharedInstance].delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,8 +42,8 @@
     if (!error) {
         
         IWDUserModel *user = [[IWDUserModel alloc] initWithUid:_fieldUserID.text
-                                                               token:_fieldToken.text
-                                                         displayName:_fieldDisplayName.text];
+                                                         token:_fieldToken.text
+                                                   displayName:_fieldDisplayName.text];
         [IWCoreService sharedInstance].currentUser = user;
         
         [self listChannels];

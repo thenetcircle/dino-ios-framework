@@ -33,13 +33,12 @@
 @implementation IWChannelListTableViewController
 
 - (void)dealloc {
-    [[IWDinoService sharedInstance] removeDelegate:self];
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[IWDinoService sharedInstance] addDelegate:self];
+    [IWDinoService sharedInstance].delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
