@@ -13,7 +13,6 @@
 		0338790F2010A4FD00F673B4 /* IWChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0338790E2010A4FD00F673B4 /* IWChatViewController.m */; };
 		033879152010A6D800F673B4 /* IWCoreService.m in Sources */ = {isa = PBXBuildFile; fileRef = 033879142010A6D800F673B4 /* IWCoreService.m */; };
 		033D858F1FDFA1F400113EDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D858E1FDFA1F400113EDE /* AppDelegate.m */; };
-		033D85921FDFA1F400113EDE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 033D85911FDFA1F400113EDE /* ViewController.m */; };
 		033D85951FDFA1F400113EDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033D85931FDFA1F400113EDE /* Main.storyboard */; };
 		033D85971FDFA1F400113EDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 033D85961FDFA1F400113EDE /* Assets.xcassets */; };
 		033D859A1FDFA1F400113EDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */; };
@@ -56,8 +55,6 @@
 		033D858A1FDFA1F400113EDE /* Dino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		033D858D1FDFA1F400113EDE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		033D858E1FDFA1F400113EDE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		033D85901FDFA1F400113EDE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		033D85911FDFA1F400113EDE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		033D85941FDFA1F400113EDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		033D85961FDFA1F400113EDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		033D85991FDFA1F400113EDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -156,8 +153,6 @@
 				0338790020107E7500F673B4 /* ViewControllers */,
 				033D858D1FDFA1F400113EDE /* AppDelegate.h */,
 				033D858E1FDFA1F400113EDE /* AppDelegate.m */,
-				033D85901FDFA1F400113EDE /* ViewController.h */,
-				033D85911FDFA1F400113EDE /* ViewController.m */,
 				033D85931FDFA1F400113EDE /* Main.storyboard */,
 				033D85961FDFA1F400113EDE /* Assets.xcassets */,
 				033D85981FDFA1F400113EDE /* LaunchScreen.storyboard */,
@@ -442,7 +437,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				03387909201098DB00F673B4 /* IWRoomListTableViewController.m in Sources */,
-				033D85921FDFA1F400113EDE /* ViewController.m in Sources */,
 				033D859D1FDFA1F400113EDE /* main.m in Sources */,
 				033D858F1FDFA1F400113EDE /* AppDelegate.m in Sources */,
 				033879152010A6D800F673B4 /* IWCoreService.m in Sources */,
