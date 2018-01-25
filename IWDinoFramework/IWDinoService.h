@@ -18,6 +18,14 @@
 @protocol IWDinoServiceDelegate
 
 @optional
+- (void)df_didReceiveChannels:(NSArray *)data;
+- (void)df_didReceiveRooms:(NSArray *)data;
+- (void)df_didReceiveMessages:(NSArray *)data;
+- (void)df_didMessagesDelivered:(NSArray *)data;
+- (void)df_didMessagesRead:(NSArray *)data;
+- (void)df_didLogin:(NSArray *)data;
+- (void)df_didJoin:(NSArray *)data;
+
 - (void)didReceiveChannels:(NSArray<IWDChannelModel *> *)channels error:(IWDError *)error;
 - (void)didReceiveRooms:(NSArray<IWDRoomModel *> *)rooms error:(IWDError *)error;
 - (void)didReceiveMessages:(NSArray<IWDMessageModel *> *)messages error:(IWDError *)error;
@@ -27,16 +35,16 @@
 - (void)didJoin:(IWDError *)error;
 @end
 
+typedef void (^IWDBlock_DF)(NSArray *array);
 typedef void (^IWDBlock)(IWDError *error);
 typedef void (^IWDRoomCreateBlock)(IWDRoomModel *room, IWDError *error);
 @interface IWDinoService : NSObject
 
-+ (instancetype)sharedInstance;
-- (void)addDelegate:(id)delegate;
-- (void)removeDelegate:(id)delegate;
-- (void)removeAllDelegates;
+@property (nonatomic, assign) id delegate;
 
-- (void)connect;
++ (instancetype)sharedInstance;
+
+- (void)connectWithServerAddress:(NSString *)address nameSpace:(NSString *)nameSpace;
 - (void)disconnect;
 
 - (void)loginWithLoginModel:(IWDLoginModel *)loginModel;
@@ -53,8 +61,11 @@ typedef void (^IWDRoomCreateBlock)(IWDRoomModel *room, IWDError *error);
                    objectType:(NSString *)objectType
                       message:(NSString *)message
                    completion:(void (^)(IWDMessageModel *message, IWDError *error))completion;
+- (void)df_sendMessageWithRoomId:(NSString *)roomId
+                      objectType:(NSString *)objectType
+                         message:(NSString *)message
+                      completion:(IWDBlock_DF)completion;
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime;
-
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWDMessageModel *> *)messages;
-- (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWDMessageModel *> *)messages;
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray *)messages;
+- (void)sentAckRead:(NSString *)roomId messages:(NSArray *)messages;
 @end

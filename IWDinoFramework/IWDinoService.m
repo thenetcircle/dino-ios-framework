@@ -9,16 +9,14 @@
 #import "IWDinoService.h"
 @import SocketIO;
 
-#define IW_DINO_SERVICE_ADDRESS @"http://10.60.1.124:9210/ws"
-
-
 @interface IWDinoService ()
+@property (nonatomic, strong) NSString *serverAddress;
+@property (nonatomic, strong) NSString *nameSpace;
 @property (nonatomic, strong) SocketManager     *socketManager;
 @property (nonatomic, strong) SocketIOClient    *socketClient;
-@property (nonatomic, strong) IWDLoginModel      *loginModel;
+@property (nonatomic, strong) IWDLoginModel     *loginModel;
 @property (nonatomic, strong) NSDateFormatter   *rcfDateFormatter;
 
-@property (nonatomic, strong) NSMutableArray    *delegates;
 @end
 
 @implementation IWDinoService
@@ -30,19 +28,10 @@
     return singleton;
 };
 
-- (instancetype)init {
-    if (self = [super init]) {
-        [self connect];
-    }
-    return self;
-}
-
-- (void)connect {
-    if (self.socketClient.status == SocketIOStatusConnected) {
-        [self.socketClient disconnect];
-    }
-    
-    if (self.socketClient.status == SocketIOStatusConnecting) {
+- (void)connectWithServerAddress:(NSString *)address nameSpace:(NSString *)nameSpace {
+    self.serverAddress = address;
+    self.nameSpace = nameSpace;
+    if (self.socketClient.status == SocketIOStatusConnecting || self.socketClient.status == SocketIOStatusConnected) {
         return;
     }
     
@@ -78,10 +67,13 @@
     
     [self.socketClient on:@"gn_message_received" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message_received  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didMessagesRead:)]) {
+            [_delegate df_didMessagesRead:data];
+        }
         IWDError *error = [self errorFromResponse:data];
         if (error) {
-            for (id delegate in self.delegates) {
-                [delegate didMessagesDelivered:@[] error:error];
+            if (_delegate && [_delegate respondsToSelector:@selector(didMessagesDelivered: error:)]) {
+                [_delegate didMessagesDelivered:@[] error:error];
             }
             return;
         }
@@ -90,19 +82,20 @@
             IWDMessageModel *message = [[IWDMessageModel alloc] initWithDic:dic];
             [messages addObject:message];
         }
-        for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didMessagesDelivered: error:)]) {
-                [delegate didMessagesDelivered:messages error:nil];
-            }
+        if (_delegate && [_delegate respondsToSelector:@selector(didMessagesDelivered: error:)]) {
+            [_delegate didMessagesDelivered:messages error:nil];
         }
     }];
     
     [self.socketClient on:@"gn_message_read" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message_read  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didMessagesRead:)]) {
+            [_delegate df_didMessagesRead:data];
+        }
         IWDError *error = [self errorFromResponse:data];
         if (error) {
-            for (id delegate in self.delegates) {
-                [delegate didMessagesRead:@[] error:error];
+            if (_delegate && [_delegate respondsToSelector:@selector(df_didMessagesRead:)]) {
+                [_delegate didMessagesRead:@[] error:error];
             }
             return;
         }
@@ -111,42 +104,44 @@
             IWDMessageModel *message = [[IWDMessageModel alloc] initWithDic:dic];
             [messages addObject:message];
         }
-        for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didMessagesRead: error:)]) {
-                [delegate didMessagesRead:messages error:nil];
-            }
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(didMessagesRead: error:)]) {
+            [_delegate didMessagesRead:messages error:nil];
         }
     }];
     
     [self.socketClient on:@"message" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  message received  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didReceiveMessages:)]) {
+            [_delegate df_didReceiveMessages:data];
+        }
         IWDError *error = [self errorFromResponse:data];
-        for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didReceiveMessages:error:)]) {
-                if (error) {
-                    [delegate didReceiveMessages:[NSArray array] error:error];
-                    return;
-                }
-                IWDMessageModel *message = [[IWDMessageModel alloc] initWithDinoResponse:data[0]];
-                NSString *roomId = data[0][@"target"][@"id"];
-                message.roomId = roomId;
-                [delegate didReceiveMessages:@[message] error:nil];
+        if (_delegate && [_delegate respondsToSelector:@selector(didReceiveMessages:error:)]) {
+            if (error) {
+                [_delegate didReceiveMessages:[NSArray array] error:error];
+                return;
             }
+            IWDMessageModel *message = [[IWDMessageModel alloc] initWithDinoResponse:data[0]];
+            NSString *roomId = data[0][@"target"][@"id"];
+            message.roomId = roomId;
+            [_delegate didReceiveMessages:@[message] error:nil];
         }
     }];
 }
 
 
 - (void)loginWithLoginModel:(IWDLoginModel *)loginModel {
-    [self.socketClient on:@"gn_login" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_login" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_login  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didLogin:)]) {
+            [_delegate df_didLogin:data];
+        }
         IWDError *error = [self errorFromResponse:data];
-        for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didLogin:)]) {
-                [delegate didLogin:error];
+        if (_delegate && [_delegate respondsToSelector:@selector(didLogin:)]) {
+            if ([_delegate respondsToSelector:@selector(didLogin:)]) {
+                [_delegate didLogin:error];
             }
         }
-        [self.socketClient off:@"gn_login"];
     }];
     [self.socketClient emit:@"login" with:@[loginModel.dictionary]];
 }
@@ -154,16 +149,16 @@
 
 - (void)listChannels {
     
-    [self.socketClient on:@"gn_list_channels" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_list_channels" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_list_channels  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didReceiveChannels:)]) {
+            [_delegate df_didReceiveMessages:data];
+        }
         IWDError *error = [self errorFromResponse:data];
         if (error) {
-            for (id delegate in self.delegates) {
-                if ([delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
-                    [delegate didReceiveChannels:@[] error:error];
-                }
+            if ([_delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
+                [_delegate didReceiveChannels:@[] error:error];
             }
-            [self.socketClient off:@"gn_list_channels"];
             return;
         }
         
@@ -174,12 +169,9 @@
             [channels addObject:channel];
         }
         
-        for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
-                [delegate didReceiveChannels:channels error:nil];
-            }
+        if ([_delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
+            [_delegate didReceiveChannels:channels error:nil];
         }
-        [self.socketClient off:@"gn_list_channels"];
     }];
     
     [self.socketClient emit:@"list_channels" with:@[@{@"verb":@"list"}]];
@@ -187,16 +179,16 @@
 
 - (void)listRoomsWithChannelId:(NSString *)channelId {
     
-    [self.socketClient on:@"gn_list_rooms" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_list_rooms" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_list_rooms  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didReceiveRooms:)]) {
+            [_delegate df_didReceiveRooms:data];
+        }
         IWDError *error = [self errorFromResponse:data];
         if (error) {
-            for (id delegate in self.delegates) {
-                if ([delegate respondsToSelector:@selector(didReceiveRooms: error:)]) {
-                    [delegate didReceiveRooms:@[] error:error];
-                }
+            if ([_delegate respondsToSelector:@selector(didReceiveRooms: error:)]) {
+                [_delegate didReceiveRooms:@[] error:error];
             }
-            [self.socketClient off:@"gn_list_rooms"];
             return;
         }
         
@@ -206,13 +198,9 @@
             IWDRoomModel *room = [[IWDRoomModel alloc] initWithDinoResponse:dic];
             [rooms addObject:room];
         }
-        
-        for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didReceiveRooms: error:)]) {
-                [delegate didReceiveRooms:rooms error:nil];
-            }
+        if ([_delegate respondsToSelector:@selector(didReceiveRooms: error:)]) {
+            [_delegate didReceiveRooms:rooms error:nil];
         }
-        [self.socketClient off:@"gn_list_rooms"];
     }];
     
     [self.socketClient emit:@"list_rooms" with:@[@{@"verb":@"list", @"object":@{@"url":channelId}}]];
@@ -222,10 +210,38 @@
                    objectType:(NSString *)objectType
                       message:(NSString *)message
                    completion:(void (^)(IWDMessageModel *message, IWDError *error))completion {
+    [self sendMessageWithRoomId:roomId
+                     objectType:objectType
+                        message:message
+                   dfCompletion:nil
+                     completion:completion];
+}
+
+- (void)df_sendMessageWithRoomId:(NSString *)roomId
+                   objectType:(NSString *)objectType
+                      message:(NSString *)message
+                   completion:(IWDBlock_DF)completion {
+    [self sendMessageWithRoomId:roomId
+                     objectType:objectType
+                        message:message
+                   dfCompletion:completion
+                     completion:nil];
+}
+
+
+- (void)sendMessageWithRoomId:(NSString *)roomId
+                   objectType:(NSString *)objectType
+                      message:(NSString *)message
+                 dfCompletion:(IWDBlock_DF)dfCompletion
+                   completion:(void (^)(IWDMessageModel *message, IWDError *error))completion {
     NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  send_message  <<<<<<<<<<<<<<<<<<<<<<<<<");
     NSString *base64Message = [[message dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0];
     
-    [self.socketClient on:@"gn_message" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_message" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        if(dfCompletion) {
+            dfCompletion(data);
+        }
+        
         if (completion) {
             IWDError *error = [self errorFromResponse:data];
             if(error){
@@ -235,20 +251,18 @@
                 completion(message, nil);
             }
         }
-        [self.socketClient off:@"gn_message"];
     }];
     NSArray *dataArray = @[@{@"verb":@"send", @"target":@{@"id":roomId, @"objectType":objectType}, @"object":@{@"content":base64Message}}];
     [self.socketClient emit:@"message" with:dataArray];
 }
 
-
 - (void)createPrivateRoomWithChannelId:(NSString *)channelId
                                 userId:(NSString *)userId1
-                            userId2:(NSString *)userId2
-                           roomName:(NSString *)roomName
-                         completion:(IWDRoomCreateBlock)completion {
+                               userId2:(NSString *)userId2
+                              roomName:(NSString *)roomName
+                            completion:(IWDRoomCreateBlock)completion {
     
-    [self.socketClient on:@"gn_create" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_create" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
         IWDError *error = [self errorFromResponse:data];
         if (completion) {
@@ -259,30 +273,28 @@
                 completion(nil, error);
             }
         }
-        [self.socketClient off:@"gn_create"];
     }];
     
     
     NSMutableString *summary = [NSMutableString stringWithFormat:@"%@,%@", userId1, userId2];
     NSDictionary *createModel = @{ @"verb":@"create",
-                                   @"object":@{@"url":@"6cba7e00-6b0e-4bee-ad59-98bf90813fd0"},
+                                   @"object":@{@"url":channelId},
                                    @"target": @{@"displayName"  : [[roomName dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0],
                                                 @"objectType"   : @"private",
                                                 @"attachments" : @[@{@"objectType" : @"owners",
-                                                                      @"summary"    : summary
-                                                                      }]
+                                                                     @"summary"    : summary
+                                                                     }]
                                                 }
                                    };
     [self.socketClient emit:@"create" with:@[createModel]];
 }
 
 - (void)removeRoom:(NSString *)roomId completion:(IWDBlock)completion {
-    [self.socketClient on:@"gn_remove_room" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_remove_room" callback:^(NSArray *data, SocketAckEmitter *ack) {
         if (completion) {
             IWDError *error = [self errorFromResponse:data];
             completion(error);
         }
-        [self.socketClient off:@"gn_remove_room"];
     }];
     
     [self.socketClient emit:@"remove_room" with: @[@{@"verb" : @"remove", @"target" : @{@"id" : roomId}}]];
@@ -290,44 +302,54 @@
 
 
 - (void)joinRoom:(NSString *)roomId {
-    [self.socketClient on:@"gn_join" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_join" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_join  <<<<<<<<<<<<<<<<<<<<<<<<<");
-        IWDError *error = [self errorFromResponse:data];
-        for (id delegate in self.delegates) {
-            if ([delegate respondsToSelector:@selector(didJoin:)]) {
-                [delegate didJoin:error];
-            }
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didJoin:)]) {
+            [_delegate df_didJoin:data];
         }
-        [self.socketClient off:@"gn_join"];
+        IWDError *error = [self errorFromResponse:data];
+    
+        if (_delegate && [_delegate respondsToSelector:@selector(didJoin:)]) {
+            [_delegate didJoin:error];
+        }
     }];
     
     [self.socketClient emit:@"join" with:@[@{@"verb":@"join", @"target":@{@"id":roomId}}]];
 }
 
 - (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime {
-    [self.socketClient on:@"gn_history" callback:^(NSArray *data, SocketAckEmitter *ack) {
+    [self.socketClient once:@"gn_history" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
-        [self.socketClient off:@"gn_history"];
     }];
     updateTime = updateTime ? : [self.rcfDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-3600]];
     [self.socketClient emit:@"history" with:@[@{@"verb":@"list", @"updated":updateTime ,@"target":@{@"id":roomId, @"objectType":@"private"}}]];
 }
 
-- (void)sentAckReceived:(NSString *)roomId messages:(NSArray<IWDMessageModel *> *)messages {
+- (void)sentAckReceived:(NSString *)roomId messages:(NSArray *)messages {
     
     NSMutableArray *messageArray = [@[] mutableCopy];
-    for (IWDMessageModel *message in messages) {
-        [messageArray addObject:@{@"id" : message.uid}];
+    for (id obj in messages) {
+        if ([obj isKindOfClass:[IWDMessageModel class]]) {
+            [messageArray addObject:@{@"id" : ((IWDMessageModel *)obj).uid}];
+        }
+        if ([obj isKindOfClass:[NSString class]]) {
+            [messageArray addObject:@{@"id" : obj}];
+        }
     }
     NSDictionary *emitObject = @{@"verb" : @"receive", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}};
     [self.socketClient emit:@"received" with: @[emitObject]];
 }
 
 - (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWDMessageModel *> *)messages {
-
+    
     NSMutableArray *messageArray = [@[] mutableCopy];
-    for (IWDMessageModel *message in messages) {
-        [messageArray addObject:@{@"id" : message.uid}];
+    for (id obj in messages) {
+        if ([obj isKindOfClass:[IWDMessageModel class]]) {
+            [messageArray addObject:@{@"id" : ((IWDMessageModel *)obj).uid}];
+        }
+        if ([obj isKindOfClass:[NSString class]]) {
+            [messageArray addObject:@{@"id" : obj}];
+        }
     }
     NSDictionary *emitObject = @{@"verb" : @"read", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}};
     [self.socketClient emit:@"read" with: @[emitObject]];
@@ -341,27 +363,10 @@
     return error;
 }
 
-- (void)addDelegate:(id)delegate {
-    if (![self.delegates containsObject:delegate]) {
-        [self.delegates addObject:delegate];
-    }
-}
-
-- (void)removeDelegate:(id)delegate {
-    if ([self.delegates containsObject: delegate]) {
-        [self.delegates removeObject: delegate];
-    }
-}
-
-- (void)removeAllDelegates {
-    [self.delegates removeAllObjects];
-}
-
-
 #pragma mark - getter / setter
 - (SocketManager *)socketManager {
     if (!_socketManager) {
-        NSURL* url = [[NSURL alloc] initWithString:@"http://10.60.1.124:9210/ws"];
+        NSURL* url = [[NSURL alloc] initWithString:self.serverAddress];
         _socketManager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log":@NO,
                                                                                @"forcePolling":@NO,
                                                                                @"transports":@[@"websocket"]}];
@@ -371,7 +376,7 @@
 
 - (SocketIOClient *)socketClient {
     if (!_socketClient) {
-        _socketClient = [self.socketManager socketForNamespace:@"/ws"];
+        _socketClient = [self.socketManager socketForNamespace:self.nameSpace];
     }
     return _socketClient;
 }
@@ -382,14 +387,6 @@
         _rcfDateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
     }
     return _rcfDateFormatter;
-}
-
-
-- (NSMutableArray *)delegates {
-    if (!_delegates) {
-        _delegates = [@[] mutableCopy];
-    }
-    return _delegates;
 }
 
 @end
