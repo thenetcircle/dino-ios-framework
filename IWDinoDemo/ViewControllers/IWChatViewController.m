@@ -1,4 +1,4 @@
-//
+ //
 //  IWChatViewController.m
 //  Dino
 //
@@ -55,8 +55,61 @@
     [IWDinoService sharedInstance].delegate = self;
     _labelMessage.enabled = NO;
     _buttonSend.enabled = NO;
-    
+    [[IWDinoService sharedInstance] getHistoryWithRoomId:self.room.uid
+                                             updatedTime:nil
+                                              completion:^(NSArray<IWDMessageModel *> *messages, IWDError *error) {
+        if (!error) {
+            self.messageArray = [NSMutableArray arrayWithArray:messages];
+            [self checkStatusOfLast10Messages:self.messageArray];
+            [_tableView reloadData];
+            
+            if (self.messageArray.count > 0) {
+                [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messageArray.count - 1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            }
+        }
+    }];
 }
+
+- (void)checkStatusOfLast10Messages:(NSArray<IWDMessageModel *> *)messages {
+    NSMutableArray *ids = [@[] mutableCopy];
+    for (IWDMessageModel *msg in messages) {
+        if ([msg.sender isEqual:[IWCoreService sharedInstance].currentUser]) {
+            [ids addObject:msg.uid];
+        }
+        if (ids.count > 9) {
+            break;
+        }
+    }
+    [self checkStatusOfMessagesWithId:ids];
+}
+
+
+- (void)checkStatusOfMessagesWithId:(NSArray *)messageIds {
+    if (messageIds && messageIds.count) {
+        [[IWDinoService sharedInstance] checkStatusOfMessages:messageIds
+                                                 targetUserId:@"3"
+                                                   completion:^(NSArray *array, IWDError *error) {
+                                                       if (!error) {
+                                                           [self updateAllMessageStatus:array];
+                                                       }
+                                                   }];
+    }
+}
+
+- (void)updateAllMessageStatus:(NSArray *)array {
+    NSArray *updatedMsgArray = array[0][@"data"][@"object"][@"attachments"];
+    for (NSDictionary *dic in updatedMsgArray) {
+        NSString *uid = dic[@"id"];
+        NSString *status = dic[@"content"];
+        for (IWDMessageModel *msg in self.messageArray) {
+            if ([msg.uid isEqualToString:uid]) {
+                msg.status = @(status.integerValue);
+            }
+        }
+    }
+    [_tableView reloadData];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -94,7 +147,7 @@
     for (IWDMessageModel *msg in self.messageArray) {
         for (IWDMessageModel *message in messages) {
             if ([msg.uid isEqualToString:message.uid]) {
-                msg.status = @(IWDMessageStatusDelivered);
+                msg.status = @(IWDMessageStatusReceived);
                 [self updateMessageStatus:msg];
             }
         }
@@ -150,13 +203,13 @@
 }
 
 - (void)addMessages:(NSArray<IWDMessageModel *> *)messages {
-    NSMutableArray *indexPaths = [@[] mutableCopy];
+    
     for (int i = 0; i < messages.count; i++) {
-        NSIndexPath *path = [NSIndexPath indexPathForRow:self.messageArray.count + i inSection:0];
-        [indexPaths addObject:path];
+        [self.messageArray insertObject:messages[i] atIndex:0 ];
+        NSIndexPath *path = [NSIndexPath indexPathForRow:self.messageArray.count + i - 1 inSection:0];
+        [_tableView insertRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationBottom];
     }
-    [self.messageArray addObjectsFromArray:messages];
-    [_tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    
     [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messageArray.count - 1 inSection:0]
                       atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
@@ -172,7 +225,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    IWDMessageModel *message = self.messageArray[indexPath.row];
+    IWDMessageModel *message = self.messageArray[self.messageArray.count - 1 - indexPath.row];
     IWChatListTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"IWChatListTableCellIdentifier"];
     [cell applyMessage:message];
     return cell;

@@ -14,6 +14,7 @@
 #import "IWCoreService.h"
 @interface IWLoginViewViewController ()<IWDinoServiceDelegate>
 {
+    IBOutlet    UIButton        *_buttonLogin;
     IBOutlet    UITextField     *_fieldUserID;
     IBOutlet    UITextField     *_fieldToken;
     IBOutlet    UITextField     *_fieldDisplayName;
@@ -26,6 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [IWDinoService sharedInstance].delegate = self;
+//    _buttonLogin.enabled = ([IWDinoService sharedInstance].socketClient.status == SocketIOStatusConnected);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +71,16 @@
         [alert addAction:[UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:nil]];
         [self presentViewController:alert animated:YES completion:nil];
     }
+}
+
+- (IBAction)disconnect:(UIButton *)button {
+    [[IWDinoService sharedInstance] disconnect];
+}
+
+- (void)didConnected:(IWDError *)error {
+//    if (!error) {
+//        _buttonLogin.enabled = YES;
+//    }
 }
 
 - (IBAction)login:(UIButton *)button {

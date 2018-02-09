@@ -665,6 +665,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="QXp-B3-jUV"/>
                     <connections>
+                        <outlet property="_buttonLogin" destination="Jmu-uK-aKI" id="ZJ3-aY-ui1"/>
                         <outlet property="_fieldDisplayName" destination="LAU-RR-4dx" id="Hc2-US-gNd"/>
                         <outlet property="_fieldToken" destination="feF-VH-bA0" id="U9w-si-uUF"/>
                         <outlet property="_fieldUserID" destination="2U6-Fi-XnT" id="FR8-ia-fff"/>
