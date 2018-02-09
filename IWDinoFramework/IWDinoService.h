@@ -11,7 +11,7 @@
 #import "IWDChannelModel.h"
 #import "IWDMessageModel.h"
 #import "IWDLoginModel.h"
-
+@import SocketIO;
 @interface IWDError : NSError
 @end
 
@@ -26,6 +26,7 @@
 - (void)df_didLogin:(NSArray *)data;
 - (void)df_didJoin:(NSArray *)data;
 
+- (void)didConnected:(IWDError *)error;
 - (void)didReceiveChannels:(NSArray<IWDChannelModel *> *)channels error:(IWDError *)error;
 - (void)didReceiveRooms:(NSArray<IWDRoomModel *> *)rooms error:(IWDError *)error;
 - (void)didReceiveMessages:(NSArray<IWDMessageModel *> *)messages error:(IWDError *)error;
@@ -37,9 +38,12 @@
 
 typedef void (^IWDBlock_DF)(NSArray *array);
 typedef void (^IWDBlock)(IWDError *error);
+typedef void (^IWDDataWithErrorBlock)(NSArray *array, IWDError *error);
 typedef void (^IWDRoomCreateBlock)(IWDRoomModel *room, IWDError *error);
-@interface IWDinoService : NSObject
+typedef void (^IWDMessagesBlock)(NSArray<IWDMessageModel *> *messages, IWDError *error);
 
+@interface IWDinoService : NSObject
+@property (nonatomic, strong) SocketIOClient    *socketClient;
 @property (nonatomic, assign) id delegate;
 
 + (instancetype)sharedInstance;
@@ -47,6 +51,7 @@ typedef void (^IWDRoomCreateBlock)(IWDRoomModel *room, IWDError *error);
 - (void)connectWithServerAddress:(NSString *)address nameSpace:(NSString *)nameSpace;
 - (void)disconnect;
 
+- (void)addListeners;
 - (void)loginWithLoginModel:(IWDLoginModel *)loginModel;
 - (void)listChannels;
 - (void)listRoomsWithChannelId:(NSString *)channelId;
@@ -65,7 +70,8 @@ typedef void (^IWDRoomCreateBlock)(IWDRoomModel *room, IWDError *error);
                       objectType:(NSString *)objectType
                          message:(NSString *)message
                       completion:(IWDBlock_DF)completion;
-- (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime;
+- (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime completion:(IWDMessagesBlock)completion;
 - (void)sentAckReceived:(NSString *)roomId messages:(NSArray *)messages;
 - (void)sentAckRead:(NSString *)roomId messages:(NSArray *)messages;
+- (void)checkStatusOfMessages:(NSArray *)messageIds targetUserId:(NSString *)userId completion:(IWDDataWithErrorBlock)completion;
 @end

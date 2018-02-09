@@ -31,6 +31,19 @@
     return self;
 }
 
+- (instancetype)initWithHistoryResponseDic:(NSDictionary *)dic {
+    _uid = dic[@"id"];
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:dic[@"content"] options:0];
+    _content = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+    _status = @2;
+    if (dic[@"author"]) {
+        NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:dic[@"author"][@"displayName"] options:0];
+        NSString *displayName = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+        _sender = [[IWDUserModel alloc] initWithUid:dic[@"author"][@"id"] token:nil displayName:displayName];
+    }
+    return self;
+}
+
 - (instancetype)initWithDic:(NSDictionary *)dic {
     if (self = [super init]) {
         _uid = dic[@"id"];
@@ -41,20 +54,20 @@
 
 - (NSString *)displayStatus {
     switch (self.status.integerValue) {
-        case IWDMessageStatusUnknown:
-            return @"Unknown";
-            break;
-        case IWDMessageStatusSending:
-            return @"Sending";
+        case IWDMessageStatusNotAcked:
+            return @"NotAcked";
             break;
         case IWDMessageStatusSent:
             return @"Sent";
             break;
-        case IWDMessageStatusDelivered:
-            return @"Delivered";
+        case IWDMessageStatusReceived:
+            return @"Received";
             break;
         case IWDMessageStatusRead:
             return @"Read";
+            break;
+        case IWDMessageStatusFailed:
+            return @"Failed";
             break;
         default:
             break;

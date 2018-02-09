@@ -10,10 +10,9 @@
 @import SocketIO;
 
 @interface IWDinoService ()
-@property (nonatomic, strong) NSString *serverAddress;
-@property (nonatomic, strong) NSString *nameSpace;
+@property (nonatomic, strong) NSString          *serverAddress;
+@property (nonatomic, strong) NSString          *nameSpace;
 @property (nonatomic, strong) SocketManager     *socketManager;
-@property (nonatomic, strong) SocketIOClient    *socketClient;
 @property (nonatomic, strong) IWDLoginModel     *loginModel;
 @property (nonatomic, strong) NSDateFormatter   *rcfDateFormatter;
 
@@ -47,6 +46,13 @@
 
 
 - (void)addListeners {
+    [self.socketClient on:@"gn_connect" callback:^(NSArray *data, SocketAckEmitter *ack) {
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_connect  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        IWDError *error = [self errorFromResponse:data];
+        if (_delegate && [_delegate respondsToSelector:@selector(didConnected:)]) {
+            [_delegate didConnected:error];
+        }
+    }];
     
     [self.socketClient on:@"connect_error" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  socket error  <<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -60,15 +66,11 @@
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  socket connect timeout  <<<<<<<<<<<<<<<<<<<<<<<<<");
     }];
     
-    [self.socketClient on:@"connect" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  socket connected  <<<<<<<<<<<<<<<<<<<<<<<<<");
-        
-    }];
     
     [self.socketClient on:@"gn_message_received" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_message_received  <<<<<<<<<<<<<<<<<<<<<<<<<");
-        if (_delegate && [_delegate respondsToSelector:@selector(df_didMessagesRead:)]) {
-            [_delegate df_didMessagesRead:data];
+        if (_delegate && [_delegate respondsToSelector:@selector(df_didMessagesDelivered:)]) {
+            [_delegate df_didMessagesDelivered:data];
         }
         IWDError *error = [self errorFromResponse:data];
         if (error) {
@@ -94,7 +96,7 @@
         }
         IWDError *error = [self errorFromResponse:data];
         if (error) {
-            if (_delegate && [_delegate respondsToSelector:@selector(df_didMessagesRead:)]) {
+            if (_delegate && [_delegate respondsToSelector:@selector(didMessagesRead: error:)]) {
                 [_delegate didMessagesRead:@[] error:error];
             }
             return;
@@ -152,11 +154,11 @@
     [self.socketClient once:@"gn_list_channels" callback:^(NSArray *data, SocketAckEmitter *ack) {
         NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_list_channels  <<<<<<<<<<<<<<<<<<<<<<<<<");
         if (_delegate && [_delegate respondsToSelector:@selector(df_didReceiveChannels:)]) {
-            [_delegate df_didReceiveMessages:data];
+            [_delegate df_didReceiveChannels:data];
         }
         IWDError *error = [self errorFromResponse:data];
         if (error) {
-            if ([_delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
+            if (_delegate && [_delegate respondsToSelector:@selector(didReceiveChannels:error:)]) {
                 [_delegate didReceiveChannels:@[] error:error];
             }
             return;
@@ -317,16 +319,32 @@
     [self.socketClient emit:@"join" with:@[@{@"verb":@"join", @"target":@{@"id":roomId}}]];
 }
 
-- (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime {
+- (void)getHistoryWithRoomId:(NSString *)roomId updatedTime:(NSString *)updateTime completion:(IWDMessagesBlock)completion {
     [self.socketClient once:@"gn_history" callback:^(NSArray *data, SocketAckEmitter *ack) {
-        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_create  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>  gn_history  <<<<<<<<<<<<<<<<<<<<<<<<<");
+        if (!completion) {
+            return;
+        }
+        IWDError *error = [self errorFromResponse:data];
+        if (!error) {
+            NSMutableArray *messages = [@[] mutableCopy];
+            for (NSDictionary *msgDic in data[0][@"data"][@"object"][@"attachments"]) {
+                IWDMessageModel *message = [[IWDMessageModel alloc] initWithHistoryResponseDic:msgDic];
+                [messages addObject:message];
+            }
+            completion(messages, nil);
+        }else {
+            completion(@[], error);
+        }
+        
+        
+        
     }];
-    updateTime = updateTime ? : [self.rcfDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-3600]];
+    updateTime = updateTime ? : [self.rcfDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-24*3600]];
     [self.socketClient emit:@"history" with:@[@{@"verb":@"list", @"updated":updateTime ,@"target":@{@"id":roomId, @"objectType":@"private"}}]];
 }
 
 - (void)sentAckReceived:(NSString *)roomId messages:(NSArray *)messages {
-    
     NSMutableArray *messageArray = [@[] mutableCopy];
     for (id obj in messages) {
         if ([obj isKindOfClass:[IWDMessageModel class]]) {
@@ -341,7 +359,6 @@
 }
 
 - (void)sentAckRead:(NSString *)roomId messages:(NSArray<IWDMessageModel *> *)messages {
-    
     NSMutableArray *messageArray = [@[] mutableCopy];
     for (id obj in messages) {
         if ([obj isKindOfClass:[IWDMessageModel class]]) {
@@ -354,6 +371,25 @@
     NSDictionary *emitObject = @{@"verb" : @"read", @"target" : @{@"id" : roomId}, @"object":@{@"attachments" : messageArray}};
     [self.socketClient emit:@"read" with: @[emitObject]];
 }
+
+- (void)checkStatusOfMessages:(NSArray *)messageIds targetUserId:(NSString *)userId completion:(IWDDataWithErrorBlock)completion {
+    
+    [self.socketClient once:@"gn_msg_status" callback:^(NSArray * data, SocketAckEmitter * emitter) {
+        if (completion) {
+            IWDError *error = [self errorFromResponse:data];
+            completion(data, error);
+        }
+    }];
+    
+    NSMutableArray *messageArray = [@[] mutableCopy];
+    for (NSString *uid in messageIds) {
+        [messageArray addObject:@{@"id" : uid}];
+        break;
+    }
+    NSDictionary *emitObject = @{@"verb" : @"check", @"target" : @{@"id" : userId}, @"object":@{@"attachments" : messageArray}};
+    [self.socketClient emit:@"msg_status" with:@[emitObject]];
+}
+
 
 - (IWDError *)errorFromResponse:(NSArray *)data {
     IWDError *error = nil;
