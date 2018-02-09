@@ -1,15 +1,24 @@
 PODS:
+  - OCHamcrest (7.0.2)
+  - OCMock (3.4.1)
+  - OCMockito (5.0.1):
+    - OCHamcrest (~> 7.0)
   - Socket.IO-Client-Swift (13.0.1):
     - Starscream (~> 3.0.2)
   - Starscream (3.0.2)
 
 DEPENDENCIES:
+  - OCMock (~> 3.4.1)
+  - OCMockito
   - Socket.IO-Client-Swift
 
 SPEC CHECKSUMS:
+  OCHamcrest: 706bfbf69a3df55a873bad096014e80e2e8ca93c
+  OCMock: 2cd0716969bab32a2283ff3a46fd26a8c8b4c5e3
+  OCMockito: 063837a086c058e764fcd23e771089c1759e7197
   Socket.IO-Client-Swift: 7055c89b7a9926b343194c4cac75998329c4a95a
   Starscream: b512c62f6706421221b5ceb2ba01a9f58aca5bea
 
-PODFILE CHECKSUM: f3fbacf066eafb9410d5db679359c345cd0939be
+PODFILE CHECKSUM: d1a29fb709c38fb0c177cd089c7ffc7fa0eaf935
 
 COCOAPODS: 1.3.1
